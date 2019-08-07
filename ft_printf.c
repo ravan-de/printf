@@ -19,6 +19,9 @@
 
 void ft_print_rev(char *str)
 {
+    int i;
+
+    i = 0;
     while (str[i] != '\0')
         i++;
     while (str[i] > 0)
@@ -68,8 +71,11 @@ void ft_convbase(unsigned int nb, unsigned int base, char **retstr, int index)
         ft_convbase(va_arg(arglst, int), 16, &retstr, 0);
 }*/
 
-void ft_fieldwidth(char *str)
+/*void ft_fieldwidth(char *str)
 {
+    size_t len;
+
+    len = 0;
     len = field_width - ft_strlen(str);
     while (len > 0)
     {
@@ -79,7 +85,7 @@ void ft_fieldwidth(char *str)
             ft_putchar(' ');
         len--;
     }
-}
+}*/
 
 int ft_getmods(char *str)
 {
@@ -93,37 +99,30 @@ int ft_getmods(char *str)
         return (8);
     if (*str == '0')
         return (16);
-    return (0)
+    return (0);
 }
 
-int ft_get_typeflags(char *str, va_list arglst)
+int ft_get_typeflags(char *str)
 {
-    while (str[i] == 'h' || str[i] == 'l')
-    {
-        if (str[i] == 'h')
-            h++;
-        if (str[i] == 'l')
-            l++;
-    }
-    if (str[i] == 'c' || str[i] == 'C')
+    if (*str == 'c' || *str == 'C')
         return (0);
-    if (str[i] == 's' || str[i] == 'S')
+    if (*str == 's' || *str == 'S')
         return (1);
-    if (str[i] == 'p' || str[i] == 'P')
+    if (*str == 'p' || *str == 'P')
         return (2);
-    if (str[i] == 'd' || str[i] == 'D')
+    if (*str == 'd' || *str == 'D')
         return (3);
-    if (str[i] == 'i' || str[i] == 'I')
+    if (*str == 'i' || *str == 'I')
         return (4);
-    if (str[i] == 'o' || str[i] == 'O')
+    if (*str == 'o' || *str == 'O')
         return (5);
-    if (str[i] == 'u' || str[i] == 'U')
+    if (*str == 'u' || *str == 'U')
         return (6);
-    if (str[i] == 'x');
+    if (*str == 'x')
         return (7);
-    if (str[i] == 'X');
+    if (*str == 'X')
         return (8);
-    i++;
+    return (-1);
 }
 
 int ft_get_modflags(char *str, va_list arglst)
@@ -134,7 +133,9 @@ int ft_get_modflags(char *str, va_list arglst)
     int     precision;
 
     i = 0;
+    mods = 0;
     field_width = 0;
+    (void)arglst;
     while (ft_getmods(&str[i]) != 0)
     {
         mods |= ft_getmods(&str[i]);
@@ -145,11 +146,11 @@ int ft_get_modflags(char *str, va_list arglst)
     while (str[i] >= '0' && str[i] <= '9')
         i++;
     if (str[i] == '.')
-        precision = ft_atoi(&str[i])
+        precision = ft_atoi(&str[i]);
     while (str[i] >= '0' && str[i] <= '9')
         i++;
-    ft_get_typeflags(&str[i], va_list arglst);
-    ft_process_flags(int mods, int field_width, int precision, /*return from get_typeflags */);
+    ft_get_typeflags(&str[i]);
+    //ft_process_flags(int mods, int field_width, int precision, /*return from get_typeflags */);
     return (i);
 }
 
@@ -163,7 +164,7 @@ void ft_printf(char *str, ...)
     while (str[stri] != '\0')
     {
         if (str[stri] == '%')
-            stri += ft_getflags(&str[stri + 1], arglst);
+            stri += ft_get_modflags(&str[stri + 1], arglst);
         else
         {
             ft_putchar(str[stri]);
@@ -186,7 +187,7 @@ int main(void)
     ptrptr = NULL;
     ptr = &a;
     ptrptr = &ptr;
-    //ft_printf("Zaanse mayo %d\n", 10);
-    printf("Zaanse mayo %hx\n", 200);
+    ft_printf("Zaanse mayo %d\n", 10);
+    //printf("Zaanse mayo %x\n", 200);
     return (1);
 }
