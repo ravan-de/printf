@@ -12,7 +12,7 @@
 
 NAME = libftprintf.a
 
-OBJ = ft_printf.o
+OBJ = ft_printf.o ft_get_int.o print_int.o
 
 INCL = libft/includes
 
@@ -25,7 +25,10 @@ test: $(OBJ)
 	gcc -o test -Wall -Wextra -Werror $(OBJ) libft/libft.a
 
 printf:
-	gcc -o test -Wall -Wextra -Werror test.c libft/libft.a
+	gcc -o test test.c libft/libft.a
+
+print:
+	gcc -o print -Wall -Wextra -Werror ft_get_int.c -I libft/includes libft/libft.a
 
 %.o: %.c
 	gcc -c -Wall -Wextra -Werror -I $(INCL) $<

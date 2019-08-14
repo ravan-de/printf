@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,34 +43,26 @@ void ft_convbase(unsigned int nb, unsigned int base, char **retstr, int index)
         (*retstr)[index] = nb + 48;
 }
 
-/*void    ft_processflags(char *str, va_list arglst, int field_width, char *flags)
+void    ft_process_flags(va_list arglst, int mods, int field_width, int precision, int type)
 {
-    char    *printstr;
-    
-    printstr = ft_strnew(1000)
-    if (ft_strchr(flags, 'd') != NULL || ft_strchr(flags, 'i') != NULL || ft_strchr(flags, 'u') != 0)
-        ft_proc_int(arglst, flags)
-    if (flags[0] == '%')
-        ft_putchar('%');
-    else if (*str == 'c')
-        ft_putchar(va_arg(arglst, int));
-    else if (*str == 's')
-        ft_strcpy(printstr, va_arg(arglst, char *));
-    else if (*str == 'p')
-        ft_convbase(va_arg(arglst, unsigned), 16, &printstr, 0);
-    else if (*str == 'd' || *str == 'i')
-        printstr = ft_itoa(va_arg(arglst, int)));
-    else if (*str == 'o')
-        ft_convbase(va_arg(arglst, int), 8, &retstr, 0);
-    else if (*str == 'u')
-        printstr = ft_itoa(va_arg(arglst, int));
-    else if (*str == 'x')
-        ft_convbase(va_arg(arglst, int), 16, &retstr, 0);
-    else if (*str == 'X')
-        ft_convbase(va_arg(arglst, int), 16, &retstr, 0);
-}*/
+    (void)precision;
+    (void)mods;
+    (void)field_width;
+    char *printstr;
 
-/*void ft_fieldwidth(char *str)
+    printstr = ft_strnew(1000);
+    void    (*funcs[5]) (va_list arglst, char **printstr);
+
+    funcs[0] = get_int;
+    funcs[1] = get_h_int;
+    funcs[2] = get_hh_int;
+    funcs[3] = get_l_int;
+    funcs[4] = get_ll_int;
+    (*funcs[type]) (arglst, &printstr);
+    ft_putstr(printstr);
+}
+
+void ft_fieldwidth(char *str)
 {
     size_t len;
 
@@ -85,7 +76,7 @@ void ft_convbase(unsigned int nb, unsigned int base, char **retstr, int index)
             ft_putchar(' ');
         len--;
     }
-}*/
+}
 
 int ft_getmods(char *str)
 {
@@ -102,26 +93,42 @@ int ft_getmods(char *str)
     return (0);
 }
 
-int ft_get_typeflags(char *str)
+int ft_convflags(char *str)
 {
-    if (*str == 'c' || *str == 'C')
+    if (*str == 'd' || *str == 'D' || *str == 'i' || *str == 'I')
         return (0);
-    if (*str == 's' || *str == 'S')
-        return (1);
-    if (*str == 'p' || *str == 'P')
-        return (2);
-    if (*str == 'd' || *str == 'D')
-        return (3);
-    if (*str == 'i' || *str == 'I')
-        return (4);
-    if (*str == 'o' || *str == 'O')
+    if (*str == 'c' || *str == 'C')
         return (5);
+    if (*str == 's' || *str == 'S')
+        return (2);
+    if (*str == 'p' || *str == 'P')
+        return (3);
+    if (*str == 'o' || *str == 'O')
+        return (4);
     if (*str == 'u' || *str == 'U')
-        return (6);
+        return (5);
     if (*str == 'x')
-        return (7);
+        return (6);
     if (*str == 'X')
-        return (8);
+        return (7);
+    return (-5);
+}
+
+int ft_typeflags(char *str)
+{
+    int h;
+    int l;
+
+    h = 0;
+    l = 0;
+    while (str[h + l] == 'h')
+        h++;
+    while (str[h + l] == 'l')
+        l++;
+    if (h >= 0 && l == 0)
+        return (ft_convflags(&str[h]) + h);
+    if (l >= 0 && h == 0)
+        return (ft_convflags(&str[l]) + 2 + l);
     return (-1);
 }
 
@@ -149,9 +156,10 @@ int ft_get_modflags(char *str, va_list arglst)
         precision = ft_atoi(&str[i]);
     while (str[i] >= '0' && str[i] <= '9')
         i++;
-    ft_get_typeflags(&str[i]);
-    //ft_process_flags(int mods, int field_width, int precision, /*return from get_typeflags */);
-    return (i);
+    ft_process_flags(arglst, mods, field_width, precision, ft_typeflags(&str[i]));
+    while (str[i] == 'l' || str[i] == 'h')
+        i++;
+    return (i + 2);
 }
 
 void ft_printf(char *str, ...)
@@ -176,18 +184,7 @@ void ft_printf(char *str, ...)
 
 int main(void)
 {
-    short   h;
-    h = 10;
-    int *ptr;
-    int **ptrptr;
-    int a;
-
-    a = 6000;
-    ptr = NULL;
-    ptrptr = NULL;
-    ptr = &a;
-    ptrptr = &ptr;
-    ft_printf("Zaanse mayo %d\n", 10);
+    ft_printf("Zaanse mayo %hd\n", 32769);
     //printf("Zaanse mayo %x\n", 200);
     return (1);
 }

@@ -10,41 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "libft.h"
+#include "limits.h"
+#include <stdlib.h>
 
-void    get_int(va_list arglst, char **printstr)
+void ft_get_int(long long nb, char **printstr)
 {
-    int nb;
+    int c;
+    int i;
 
-    nb = va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_h_int(va_list arglst, char **printstr)
-{
-    short nb;
-
-    nb = (short)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_hh_int(va_list arglst, char **printstr)
-{
-    signed char nb;
-
-    nb = (signed char)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_l_int(va_list arglst, char **printstr)
-{
-    long nb;
-
-    nb = va_arg(arglst, long);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_ll_int(va_list arglst, char **printstr)
-{
-    ft_get_int(va_arg(arglst, long long), printstr);
+    i = 0;
+    c = 0;
+    if (nb < 0)
+    {
+        (*printstr)[c] = '-';
+        c++;
+        nb *= -1;
+    }
+    while (nb / ft_recursive_power(10, i) > 9)
+        i++;
+    (*printstr)[c] = nb / ft_recursive_power(10, i) + '0';
+    while (i > 0)
+    {
+        i--;
+        c++;
+        (*printstr)[c] =  nb / ft_recursive_power(10, i) % 10 + '0';
+    }
 }

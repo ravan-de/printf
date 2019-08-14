@@ -10,41 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
-
-void    get_int(va_list arglst, char **printstr)
+long long ft_recursive_power(long long nb, unsigned power)
 {
-    int nb;
-
-    nb = va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_h_int(va_list arglst, char **printstr)
-{
-    short nb;
-
-    nb = (short)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_hh_int(va_list arglst, char **printstr)
-{
-    signed char nb;
-
-    nb = (signed char)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_l_int(va_list arglst, char **printstr)
-{
-    long nb;
-
-    nb = va_arg(arglst, long);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_ll_int(va_list arglst, char **printstr)
-{
-    ft_get_int(va_arg(arglst, long long), printstr);
+    if (power == 0)
+        return (1);
+    if (power == 1)
+        return (nb);
+    return (nb * ft_recursive_power(nb, power - 1));
 }

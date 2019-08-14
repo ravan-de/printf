@@ -13,33 +13,14 @@
 #ifndef PRINTF_H
 # define PRINTF_H
 
-typedef enum    e_flags
-{
-                h,
-                l,
-                c,
-                C = 2,
-                s,
-                S = 3,
-                p,
-                P = 4,
-                d,
-                D = 5,
-                i,
-                I = 6,
-                o,
-                O = 7,
-                u,
-                U = 9,
-                x,
-                X = 10,
-                f
-}               t_flags;
+#include <stdarg.h>
 
-/*
-number fetched from enum will be used in list of funtion pointers to select the right function.
-This way my printf will be easily exstendable by adding a new flag to the end of the enum and a new funtion ptr to the end of the array.
- */
+void    ft_get_int(long long nb, char **printstr);
+void    get_int(va_list arglst, char **printstr);
+void    get_h_int(va_list arglst, char **printstr);
+void    get_hh_int(va_list arglst, char **printstr);
+void    get_l_int(va_list arglst, char **printstr);
+void    get_ll_int(va_list arglst, char **printstr);
 
 #endif
 

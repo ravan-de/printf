@@ -4,16 +4,6 @@
 
 int main (void)
 {
-    t_flags flag;
-    char c;
-
-    c = 'p';
-    flag = c;
-    ft_putnbr(flag);
-    ft_putendl("");
-    flag = P;
-    ft_putnbr(flag);
-    ft_putendl("");
-    //printf("test:%lD", 2342353240);
+    printf("test:%x", 922337203685477580);
     return (0);
 }
