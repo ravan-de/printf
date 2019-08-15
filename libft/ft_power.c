@@ -10,31 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "limits.h"
-#include <stdlib.h>
-
-void	ft_get_int(long long nb, char **printstr)
+long long ft_power(long long nb, unsigned power)
 {
-	int i;
-
-	i = 0;
-	if (nb == -9223372036854775808)
-	{
-		strcpy(*printstr, "-922337203685477580");
-		nb = 8;
-	}
-	if (nb < 0)
-	{
-		(*printstr)[0] = '-';
-		nb *= -1;
-	}
-	while (nb / ft_power(10, i) > 9)
-		i++;
-	(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) + '0';
-	while (i > 0)
-	{
-		i--;
-		(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) % 10 + '0';
-	}
+    if (power == 0)
+        return (1);
+    if (power == 1)
+        return (nb);
+    return (nb * ft_power(nb, power - 1));
 }

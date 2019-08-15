@@ -10,31 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "limits.h"
-#include <stdlib.h>
+#include "printf.h"
 
-void	ft_get_int(long long nb, char **printstr)
+void    get_octal(va_list arglst, char **printstr)
 {
-	int i;
+    unsigned nb;
 
-	i = 0;
-	if (nb == -9223372036854775808)
-	{
-		strcpy(*printstr, "-922337203685477580");
-		nb = 8;
-	}
-	if (nb < 0)
-	{
-		(*printstr)[0] = '-';
-		nb *= -1;
-	}
-	while (nb / ft_power(10, i) > 9)
-		i++;
-	(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) + '0';
-	while (i > 0)
-	{
-		i--;
-		(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) % 10 + '0';
-	}
+    nb = va_arg(arglst, unsigned);
+    ft_convbase((unsigned long long)nb, 8, printstr);
+}
+
+void    get_h_octal(va_list arglst, char **printstr)
+{
+    unsigned short nb;
+
+    nb = (unsigned short)va_arg(arglst, int);
+    ft_convbase((unsigned long long)nb, 8, printstr);
+}
+
+void    get_hh_octal(va_list arglst, char **printstr)
+{
+    unsigned char nb;
+
+    nb = (unsigned char)va_arg(arglst, int);
+    ft_convbase((unsigned long long)nb, 8, printstr);
+}
+
+void    get_l_octal(va_list arglst, char **printstr)
+{
+    unsigned long nb;
+
+    nb = va_arg(arglst, unsigned long);
+    ft_convbase((unsigned long long)nb, 8, printstr);
+}
+
+void    get_ll_octal(va_list arglst, char **printstr)
+{
+    ft_convbase(va_arg(arglst, unsigned long long), 8, printstr);
 }

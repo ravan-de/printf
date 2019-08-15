@@ -12,7 +12,8 @@
 
 NAME = libftprintf.a
 
-OBJ = ft_printf.o ft_get_int.o print_int.o
+OBJ = ft_printf.o ft_get_int.o int.o ft_get_unsigned.o unsigned.o octal.o \
+	hex.o ft_convbase.o
 
 INCL = libft/includes
 
@@ -31,7 +32,7 @@ print:
 	gcc -o print -Wall -Wextra -Werror ft_get_int.c -I libft/includes libft/libft.a
 
 %.o: %.c
-	gcc -c -Wall -Wextra -Werror -I $(INCL) $<
+	gcc -c -I $(INCL) $<
 
 clean:
 	rm -f *.o

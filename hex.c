@@ -10,11 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-long long ft_recursive_power(long long nb, unsigned power)
+#include "printf.h"
+
+void    get_hex(va_list arglst, char **printstr)
 {
-    if (power == 0)
-        return (1);
-    if (power == 1)
-        return (nb);
-    return (nb * ft_recursive_power(nb, power - 1));
+    unsigned nb;
+
+    nb = va_arg(arglst, unsigned);
+    ft_convbase((unsigned long long)nb, 16, printstr);
+}
+
+void    get_h_hex(va_list arglst, char **printstr)
+{
+    unsigned short nb;
+
+    nb = (unsigned short)va_arg(arglst, int);
+    ft_convbase((unsigned long long)nb, 16, printstr);
+}
+
+void    get_hh_hex(va_list arglst, char **printstr)
+{
+    unsigned char nb;
+
+    nb = (unsigned char)va_arg(arglst, int);
+    ft_convbase((unsigned long long)nb, 16, printstr);
+}
+
+void    get_l_hex(va_list arglst, char **printstr)
+{
+    unsigned long nb;
+
+    nb = va_arg(arglst, unsigned long);
+    ft_convbase((unsigned long long)nb, 16, printstr);
+}
+
+void    get_ll_hex(va_list arglst, char **printstr)
+{
+    ft_convbase(va_arg(arglst, unsigned long long), 16, printstr);
 }

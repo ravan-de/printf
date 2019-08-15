@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print_int.c                                        :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -11,30 +11,27 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "limits.h"
-#include <stdlib.h>
 
-void	ft_get_int(long long nb, char **printstr)
+void ft_convbase(unsigned long long nb, unsigned long long base, char **printstr)
 {
-	int i;
+    int i;
+    int c;
 
-	i = 0;
-	if (nb == -9223372036854775808)
-	{
-		strcpy(*printstr, "-922337203685477580");
-		nb = 8;
-	}
-	if (nb < 0)
-	{
-		(*printstr)[0] = '-';
-		nb *= -1;
-	}
-	while (nb / ft_power(10, i) > 9)
-		i++;
-	(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) + '0';
-	while (i > 0)
-	{
-		i--;
-		(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) % 10 + '0';
-	}
+    c = 0;
+    i = 0;
+    while (nb / ft_power(base, i) >= base)
+        i++;
+    if (nb / ft_power(base, i) > 9)
+        (*printstr)[c] = nb / ft_power(base, i) + 87;
+    else
+        (*printstr)[c] = nb / ft_power(base, i) + 48;
+    while (i > 0)
+    {
+        i--;
+        c++;
+        if (nb / ft_power(base, i) % base > 9)
+            (*printstr)[c] = nb / ft_power(base, i) % base + 87;
+        else
+            (*printstr)[c] = nb / ft_power(base, i) % base + 48;
+    }
 }
