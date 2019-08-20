@@ -15,29 +15,31 @@
 
 #include <stdarg.h>
 
-void    ft_get_int(long long nb, char **printstr);
-void    ft_get_unsigned(unsigned long long nb, char **printstr);
+typedef struct  s_flags
+{
+    int mods;
+    int field_width;
+    int precision;
+    int type;
+    int conversion;
+}               t_flags;
+
+void    conv_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
+void    conv_h_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
+void    conv_hh_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
+void    conv_l_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
+void    conv_ll_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
+//void    conv_unsigned(va_list arglst);
+//void    conv_h_unsigned(va_list arglst);
+//void    conv_hh_unsigned(va_list arglst);
+//void    conv_l_unsigned(va_list arglst);
+//void    conv_ll_unsigned(va_list arglst);
+void    ft_get_int(void *input, char **printstr);
+void    ft_get_uns(void *input, char **printstr);
+void    ft_get_oct(void *input, char **printstr);
+void    ft_get_hex(void *input, char **printstr);
+void    ft_int(long long nb, char **printstr);
 void    ft_convbase(unsigned long long nb, unsigned long long base, char **printstr);
-void    get_int(va_list arglst, char **printstr);
-void    get_h_int(va_list arglst, char **printstr);
-void    get_hh_int(va_list arglst, char **printstr);
-void    get_l_int(va_list arglst, char **printstr);
-void    get_ll_int(va_list arglst, char **printstr);
-void    get_unsigned(va_list arglst, char **printstr);
-void    get_h_unsigned(va_list arglst, char **printstr);
-void    get_hh_unsigned(va_list arglst, char **printstr);
-void    get_l_unsigned(va_list arglst, char **printstr);
-void    get_ll_unsigned(va_list arglst, char **printstr);
-void    get_octal(va_list arglst, char **printstr);
-void    get_h_octal(va_list arglst, char **printstr);
-void    get_hh_octal(va_list arglst, char **printstr);
-void    get_l_octal(va_list arglst, char **printstr);
-void    get_ll_octal(va_list arglst, char **printstr);
-void    get_hex(va_list arglst, char **printstr);
-void    get_h_hex(va_list arglst, char **printstr);
-void    get_hh_hex(va_list arglst, char **printstr);
-void    get_l_hex(va_list arglst, char **printstr);
-void    get_ll_hex(va_list arglst, char **printstr);
 
 #endif
 
@@ -47,7 +49,7 @@ void    get_ll_hex(va_list arglst, char **printstr);
 nieuwe idee:
     cast input to correct type using funtion array;
     cast input to void * and pass this to function of conversion type;
-    this function converts void * to long long or unsigned long long and converts to str(ft_convbase, ft_get_int.c)
+    this function converts void * to long long or unsigned long long and converts to str(ft_convbase, ft_conv_int.c)
     mods get applied to str;
     print field_width;
     print str;

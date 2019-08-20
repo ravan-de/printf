@@ -12,8 +12,8 @@
 
 NAME = libftprintf.a
 
-OBJ = ft_printf.o ft_get_int.o int.o ft_get_unsigned.o unsigned.o octal.o \
-	hex.o ft_convbase.o
+OBJ = ft_printf.o ft_int.o int.o unsigned.o \
+ft_convbase.o print.o
 
 INCL = libft/includes
 

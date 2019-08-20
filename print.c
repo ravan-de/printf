@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print_int.c                                        :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -11,35 +11,23 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#include "libft.h"
 
-void    conv_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+void	ft_get_int(void *input, char **printstr)
 {
-    (*f)((long long)va_arg(arglst, int), str);
+    ft_int((long long)*(long long *)(input), printstr);
 }
 
-void    conv_h_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+void    ft_get_uns(void *input, char **printstr)
 {
-    short   nb;
-
-    nb = (short)va_arg(arglst, int);
-    (*f)((long long)nb, str);
+    ft_convbase(*(unsigned long long *)(input), 10, printstr);
 }
 
-void    conv_hh_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+void    ft_get_oct(void *input, char **printstr)
 {
-    signed char nb;
-
-    nb = (signed char)va_arg(arglst, int);
-    (*f)((long long)nb, str);
+    ft_convbase(*(unsigned long long *)(input), 8, printstr);
 }
 
-void    conv_l_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+void    ft_get_hex(void *input, char **printstr)
 {
-    (*f)((long long)va_arg(arglst, long), str);
-}
-
-void    conv_ll_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
-{
-    (*f)(va_arg(arglst, long long), str);
+    ft_convbase(*(unsigned long long *)(input), 16, printstr);
 }
