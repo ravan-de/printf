@@ -11,23 +11,49 @@
 /* ************************************************************************** */
 
 #include "printf.h"
+#include "libft.h"
+#include <stdlib.h>
 
-void	ft_get_int(void *input, char **printstr)
+char	*ft_get_int(long long nb)
 {
-    ft_int((long long)*(long long *)(input), printstr);
+    char *str;
+	int i;
+
+    str = ft_strnew(20);
+	i = 0;
+	if (nb == -9223372036854775808)
+	{
+		strcpy(str, "-922337203685477580");
+		nb = 8;
+	}
+	if (nb < 0)
+	{
+		str[0] = '-';
+		nb *= -1;
+	}
+	while (nb / ft_power(10, i) > 9)
+		i++;
+	str[ft_strlen(str)] = nb / ft_power(10, i) + '0';
+	while (i > 0)
+	{
+		i--;
+		str[ft_strlen(str)] = nb / ft_power(10, i) % 10 + '0';
+	}
+    return (str);
 }
 
-void    ft_get_uns(void *input, char **printstr)
+
+char    *ft_get_uns(uint64_t nb)
 {
-    ft_convbase(*(unsigned long long *)(input), 10, printstr);
+    return (ft_convbase(nb, 10));
 }
 
-void    ft_get_oct(void *input, char **printstr)
+char    *ft_get_oct(uint64_t nb)
 {
-    ft_convbase(*(unsigned long long *)(input), 8, printstr);
+    return (ft_convbase(nb, 8));
 }
 
-void    ft_get_hex(void *input, char **printstr)
+char    *ft_get_hex(uint64_t nb)
 {
-    ft_convbase(*(unsigned long long *)(input), 16, printstr);
+    return (ft_convbase(nb, 16));
 }

@@ -11,9 +11,11 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void ft_convbase(unsigned long long nb, unsigned long long base, char **printstr)
+char *ft_convbase(uint64_t nb, uint64_t base)
 {
+    char *str;
     int i;
     int c;
 
@@ -21,17 +23,19 @@ void ft_convbase(unsigned long long nb, unsigned long long base, char **printstr
     i = 0;
     while (nb / ft_power(base, i) >= base)
         i++;
+    str = ft_strnew(i);
     if (nb / ft_power(base, i) > 9)
-        (*printstr)[c] = nb / ft_power(base, i) + 87;
+        str[c] = nb / ft_power(base, i) + 87;
     else
-        (*printstr)[c] = nb / ft_power(base, i) + 48;
+        str[c] = nb / ft_power(base, i) + 48;
     while (i > 0)
     {
         i--;
         c++;
         if (nb / ft_power(base, i) % base > 9)
-            (*printstr)[c] = nb / ft_power(base, i) % base + 87;
+            str[c] = nb / ft_power(base, i) % base + 87;
         else
-            (*printstr)[c] = nb / ft_power(base, i) % base + 48;
+            str[c] = nb / ft_power(base, i) % base + 48;
     }
+    return (str);
 }

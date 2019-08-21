@@ -14,6 +14,7 @@
 # define PRINTF_H
 
 #include <stdarg.h>
+#include <stdlib.h>
 
 typedef struct  s_flags
 {
@@ -24,22 +25,21 @@ typedef struct  s_flags
     int conversion;
 }               t_flags;
 
-void    conv_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
-void    conv_h_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
-void    conv_hh_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
-void    conv_l_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
-void    conv_ll_int(va_list arglst, char **str, void (*f)(long long nb, char **str));
-//void    conv_unsigned(va_list arglst);
-//void    conv_h_unsigned(va_list arglst);
-//void    conv_hh_unsigned(va_list arglst);
-//void    conv_l_unsigned(va_list arglst);
-//void    conv_ll_unsigned(va_list arglst);
-void    ft_get_int(void *input, char **printstr);
-void    ft_get_uns(void *input, char **printstr);
-void    ft_get_oct(void *input, char **printstr);
-void    ft_get_hex(void *input, char **printstr);
-void    ft_int(long long nb, char **printstr);
-void    ft_convbase(unsigned long long nb, unsigned long long base, char **printstr);
+char    *conv_int(va_list arglst, char *(*f)(long long nb));
+char    *conv_h_int(va_list arglst, char *(*f)(long long nb));
+char    *conv_hh_int(va_list arglst, char *(*f)(long long nb));
+char    *conv_l_int(va_list arglst, char *(*f)(long long nb));
+char    *conv_ll_int(va_list arglst, char *(*f)(long long nb));
+char    *conv_un(va_list arglst, char *(*f)(uint64_t nb));
+char    *conv_hu(va_list arglst, char *(*f)(uint64_t nb));
+char    *conv_hhu(va_list arglst, char *(*f)(uint64_t nb));
+char    *conv_lu(va_list arglst, char *(*f)(uint64_t nb));
+char    *conv_llu(va_list arglst, char *(*f)(uint64_t nb));
+char    *ft_get_uns(uint64_t nb);
+char    *ft_get_oct(uint64_t nb);
+char    *ft_get_hex(uint64_t nb);
+char    *ft_convbase(uint64_t nb, uint64_t base);
+char    *ft_get_int(long long nb);
 
 #endif
 

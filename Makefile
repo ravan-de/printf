@@ -12,7 +12,7 @@
 
 NAME = libftprintf.a
 
-OBJ = ft_printf.o ft_int.o int.o unsigned.o \
+OBJ = ft_printf.o int.o unsigned.o \
 ft_convbase.o print.o
 
 INCL = libft/includes

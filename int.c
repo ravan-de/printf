@@ -13,33 +13,33 @@
 #include "printf.h"
 #include "libft.h"
 
-void    conv_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+char    *conv_int(va_list arglst, char *(*f)(long long nb))
 {
-    (*f)((long long)va_arg(arglst, int), str);
+    return ((*f)((long long)va_arg(arglst, int)));
 }
 
-void    conv_h_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+char    *conv_h_int(va_list arglst, char *(*f)(long long nb))
 {
     short   nb;
 
     nb = (short)va_arg(arglst, int);
-    (*f)((long long)nb, str);
+    return((*f)((long long)nb));
 }
 
-void    conv_hh_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+char    *conv_hh_int(va_list arglst, char *(*f)(long long nb))
 {
     signed char nb;
 
     nb = (signed char)va_arg(arglst, int);
-    (*f)((long long)nb, str);
+    return((*f)((long long)nb));
 }
 
-void    conv_l_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+char    *conv_l_int(va_list arglst, char *(*f)(long long nb))
 {
-    (*f)((long long)va_arg(arglst, long), str);
+    return((*f)((long long)va_arg(arglst, long)));
 }
 
-void    conv_ll_int(va_list arglst, char **str, void (*f)(long long nb, char **str))
+char    *conv_ll_int(va_list arglst, char *(*f)(long long nb))
 {
-    (*f)(va_arg(arglst, long long), str);
+    return ((*f)(va_arg(arglst, long long)));
 }

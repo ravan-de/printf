@@ -30,23 +30,31 @@
 
 void    ft_process_flags(va_list arglst, t_flags flags)
 {
-	void	(*convs[5]) (va_list arglst, char **str, void (*f)(long long nb, char **str));
+	char	*(*conv_i[5]) (va_list arglst, char *(*f)(long long nb));
+	char	*(*conv_u[5]) (va_list arglst, char *(*f)(uint64_t nb));
 	char	*str;
 	
-	str = ft_strnew(1000);
-	convs[0] = conv_int;
-	convs[1] = conv_h_int;
-	convs[2] = conv_hh_int;
-	convs[3] = conv_l_int;
-	convs[4] = conv_ll_int;
-	//convs[5] = conv_unsigned;
-	//convs[6] = conv_h_unsigned;
-	//convs[7] = conv_hh_unsigned;
-	//convs[8] = conv_l_unsigned;
-	//convs[9] = conv_ll_unsigned;
+	str = NULL;
+	conv_i[0] = conv_int;
+	conv_i[1] = conv_h_int;
+	conv_i[2] = conv_hh_int;
+	conv_i[3] = conv_l_int;
+	conv_i[4] = conv_ll_int;
+	conv_u[0] = conv_un;
+	conv_u[1] = conv_hu;
+	conv_u[2] = conv_hhu;
+	conv_u[3] = conv_lu;
+	conv_u[4] = conv_llu;
 	if (flags.conversion == 0)
-		(*convs[flags.type]) (arglst, &str, ft_int);
+		str = (*conv_i[flags.type]) (arglst, ft_get_int);
+	if (flags.conversion == 1)
+		str = (*conv_u[flags.type]) (arglst, ft_get_uns);
+	if (flags.conversion == 2)
+		str = (*conv_u[flags.type]) (arglst, ft_get_oct);
+	if (flags.conversion == 3)
+		str = (*conv_u[flags.type]) (arglst, ft_get_hex);
 	ft_putstr(str);
+	free (str);
 }
 
 /*void ft_fieldwidth(char *str)
@@ -164,7 +172,7 @@ void ft_printf(char *str, ...)
 
 int main(void)
 {
-	ft_printf("Zaanse mayo %hd\n", 2147483647);
-	printf("Zaanse mayo %hd\n", 2147483647);
+	ft_printf("Zaanse mayo %x\n", -23456);
+	printf("Zaanse mayo %x\n", -23456);
 	return (1);
 }
