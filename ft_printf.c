@@ -28,6 +28,8 @@ char	*ft_alt(char *str, t_flags flags)
 	retstr = str;
 	if ((flags.conversion == 'x' || flags.conversion == 'X') && str[0] != '0')
 		retstr = ft_strjoin("0x", str);
+	if (flags.conversion == 'o' && str[0] != '0')
+		retstr = ft_strjoin("0", str);
 	return (retstr);
 }
 
@@ -196,7 +198,7 @@ int		main(void)
 	int a;
 
 	a = 10;
-	ft_printf("Zaanse mayo %p\n", &a);
-	printf("Zaanse mayo %p\n", &a);
+	ft_printf("Zaanse mayo %#o\n", 0);
+	printf("Zaanse mayo %#o\n", 0);
 	return (1);
 }
