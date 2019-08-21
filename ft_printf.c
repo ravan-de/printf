@@ -16,6 +16,52 @@
 #include "libft.h"
 #include "printf.h"
 
+void	ft_capitalize(char *s)
+{
+	*s = ft_toupper(*s);
+}
+
+char	*ft_alt(char *str, t_flags flags)
+{
+	char *retstr;
+
+	retstr = str;
+	if ((flags.conversion == 'x' || flags.conversion == 'X') && str[0] != '0')
+		retstr = ft_strjoin("0x", str);
+	return (retstr);
+}
+
+void	ft_apply_mods(char *str, t_flags flags)
+{
+	char *finalstr;
+	int len;
+
+	if ((flags.mods & 1) == 1)
+		finalstr = ft_alt(str, flags);
+	else
+		finalstr = str;
+	if (flags.conversion == 'X')
+		ft_striter(finalstr, ft_capitalize);
+	if ((flags.mods & 4) == 4 && str[0] != '-')
+		finalstr = ft_strjoin("+", str);
+	if ((flags.mods & 12) == 8 && str[0] != '-')
+		finalstr = ft_strjoin(" ", str);
+	//field_width
+	len = flags.field_width - ft_strlen(finalstr);
+	if ((flags.mods & 2) == 2)
+		ft_putstr(finalstr);
+	while (len > 0)
+	{
+		if ((flags.mods & 18) == 16)
+			ft_putchar('0');
+		else
+			ft_putchar(' ');
+		len--;
+	}
+	if ((flags.mods & 2) != 2)
+		ft_putstr(finalstr);
+}
+
 void	ft_process_flags(va_list arglst, t_flags flags)
 {
 	char	*(*conv_i[5]) (va_list arglst, char *(*f)(long long nb));
@@ -33,35 +79,25 @@ void	ft_process_flags(va_list arglst, t_flags flags)
 	conv_u[2] = conv_hhu;
 	conv_u[3] = conv_lu;
 	conv_u[4] = conv_llu;
-	if (flags.conversion == 0)
+	if (flags.conversion == 'i' || flags.conversion == 'd')
 		str = (*conv_i[flags.type])(arglst, ft_get_int);
-	if (flags.conversion == 1)
+	if (flags.conversion == 'u')
 		str = (*conv_u[flags.type])(arglst, ft_get_uns);
-	if (flags.conversion == 2)
+	if (flags.conversion == 'o')
 		str = (*conv_u[flags.type])(arglst, ft_get_oct);
-	if (flags.conversion == 3)
+	if (flags.conversion == 'x' || flags.conversion == 'X')
 		str = (*conv_u[flags.type])(arglst, ft_get_hex);
-	ft_putstr(str);
-	free(str);
-}
-
-/*
-void ft_fieldwidth(char *str)
-{
-	size_t len;
-
-	len = 0;
-	len = field_width - ft_strlen(str);
-	while (len > 0)
+	if (flags.conversion == 'p')
+		str = ft_strjoin("0x7fff", (*conv_u[0])(arglst, ft_get_hex));
+	if (flags.conversion == 'c')
 	{
-		if (ft_strchr(flags, '0') != NULL)
-			ft_putchar('0');
-		else
-			ft_putchar(' ');
-		len--;
+		str = ft_strnew(1);
+		str[0] = (char)va_arg(arglst, int);
 	}
+	if (flags.conversion == 's')
+		str = ft_strdup(va_arg(arglst, char *));
+	ft_apply_mods(str, flags);
 }
-*/
 
 int		ft_getmods(char *str)
 {
@@ -80,17 +116,10 @@ int		ft_getmods(char *str)
 
 int		ft_convflags(char *str)
 {
-	if (*str == 'd' || *str == 'i')
-		return (0);
-	if (*str == 'u')
-		return (1);
-	if (*str == 'o')
-		return (2);
-	if (*str == 'x')
-		return (3);
-	if (*str == 'X')
-		return (4);
-	return (-5);
+	if (*str == 'd' || *str == 'i' || *str == 'c' || *str == 's' || *str == 'p'
+	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X')
+		return (*str);
+	return (-1);
 }
 
 int		ft_typeflags(char *str)
@@ -149,10 +178,12 @@ void	ft_printf(char *str, ...)
 	va_start(arglst, str);
 	while (str[stri] != '\0')
 	{
-		if (str[stri] == '%')
+		if (str[stri] == '%' && str[stri + 1] != '%')
 			stri += ft_get_modflags(&str[stri + 1], arglst);
 		else
 		{
+			if (str[stri] == '%' && str[stri + 1] == '%')
+				str++;
 			ft_putchar(str[stri]);
 			stri++;
 		}
@@ -162,7 +193,10 @@ void	ft_printf(char *str, ...)
 
 int		main(void)
 {
-	ft_printf("Zaanse mayo %x\n", -23456);
-	printf("Zaanse mayo %x\n", -23456);
+	int a;
+
+	a = 10;
+	ft_printf("Zaanse mayo %p\n", &a);
+	printf("Zaanse mayo %p\n", &a);
 	return (1);
 }
