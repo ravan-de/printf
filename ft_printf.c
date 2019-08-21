@@ -91,6 +91,8 @@ void	ft_process_flags(va_list arglst, t_flags flags)
 		str = (*conv_u[flags.type])(arglst, ft_get_hex);
 	if (flags.conversion == 'p')
 		str = ft_strjoin("0x7fff", (*conv_u[0])(arglst, ft_get_hex));
+	if (flags.conversion == 'b')
+		str = (*conv_u[0])(arglst, ft_get_bin);
 	if (flags.conversion == 'c')
 	{
 		str = ft_strnew(1);
@@ -119,7 +121,7 @@ int		ft_getmods(char *str)
 int		ft_convflags(char *str)
 {
 	if (*str == 'd' || *str == 'i' || *str == 'c' || *str == 's' || *str == 'p'
-	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X')
+	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X' || *str == 'b')
 		return (*str);
 	return (-1);
 }
@@ -198,7 +200,6 @@ int		main(void)
 	int a;
 
 	a = 10;
-	ft_printf("Zaanse mayo %#o\n", 0);
-	printf("Zaanse mayo %#o\n", 0);
+	ft_printf("Zaanse mayo %b\n", 6);
 	return (1);
 }

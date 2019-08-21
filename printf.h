@@ -38,6 +38,7 @@ char			*conv_llu(va_list arglst, char *(*f)(uint64_t nb));
 char			*ft_get_uns(uint64_t nb);
 char			*ft_get_oct(uint64_t nb);
 char			*ft_get_hex(uint64_t nb);
+char			*ft_get_bin(uint64_t nb);
 char			*ft_convbase(uint64_t nb, uint64_t base);
 char			*ft_get_int(long long nb);
 

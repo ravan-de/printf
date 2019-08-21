@@ -56,3 +56,8 @@ char	*ft_get_hex(uint64_t nb)
 {
 	return (ft_convbase(nb, 16));
 }
+
+char	*ft_get_bin(uint64_t nb)
+{
+	return (ft_convbase(nb, 2));
+}
