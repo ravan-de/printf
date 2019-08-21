@@ -16,24 +16,12 @@
 #include "libft.h"
 #include "printf.h"
 
-/*	ft_print_flags(t_flags flags)
-{
-	void	(*print[4]) (void *input, char **printstr);
-
-	print[0] = ft_get_int;
-	print[1] = ft_get_uns;
-	print[2] = ft_get_oct;
-	print[3] = ft_get_hex;
-	(*print[flags.conversion]) (input, &printstr);
-	ft_putstr(printstr);
-}*/
-
-void    ft_process_flags(va_list arglst, t_flags flags)
+void	ft_process_flags(va_list arglst, t_flags flags)
 {
 	char	*(*conv_i[5]) (va_list arglst, char *(*f)(long long nb));
 	char	*(*conv_u[5]) (va_list arglst, char *(*f)(uint64_t nb));
 	char	*str;
-	
+
 	str = NULL;
 	conv_i[0] = conv_int;
 	conv_i[1] = conv_h_int;
@@ -46,18 +34,19 @@ void    ft_process_flags(va_list arglst, t_flags flags)
 	conv_u[3] = conv_lu;
 	conv_u[4] = conv_llu;
 	if (flags.conversion == 0)
-		str = (*conv_i[flags.type]) (arglst, ft_get_int);
+		str = (*conv_i[flags.type])(arglst, ft_get_int);
 	if (flags.conversion == 1)
-		str = (*conv_u[flags.type]) (arglst, ft_get_uns);
+		str = (*conv_u[flags.type])(arglst, ft_get_uns);
 	if (flags.conversion == 2)
-		str = (*conv_u[flags.type]) (arglst, ft_get_oct);
+		str = (*conv_u[flags.type])(arglst, ft_get_oct);
 	if (flags.conversion == 3)
-		str = (*conv_u[flags.type]) (arglst, ft_get_hex);
+		str = (*conv_u[flags.type])(arglst, ft_get_hex);
 	ft_putstr(str);
-	free (str);
+	free(str);
 }
 
-/*void ft_fieldwidth(char *str)
+/*
+void ft_fieldwidth(char *str)
 {
 	size_t len;
 
@@ -71,9 +60,10 @@ void    ft_process_flags(va_list arglst, t_flags flags)
 			ft_putchar(' ');
 		len--;
 	}
-}*/
+}
+*/
 
-int ft_getmods(char *str)
+int		ft_getmods(char *str)
 {
 	if (*str == '#')
 		return (1);
@@ -88,7 +78,7 @@ int ft_getmods(char *str)
 	return (0);
 }
 
-int ft_convflags(char *str)
+int		ft_convflags(char *str)
 {
 	if (*str == 'd' || *str == 'i')
 		return (0);
@@ -103,7 +93,7 @@ int ft_convflags(char *str)
 	return (-5);
 }
 
-int ft_typeflags(char *str)
+int		ft_typeflags(char *str)
 {
 	int h;
 	int l;
@@ -121,10 +111,10 @@ int ft_typeflags(char *str)
 	return (-1);
 }
 
-int ft_get_modflags(char *str, va_list arglst)
+int		ft_get_modflags(char *str, va_list arglst)
 {
-	size_t  i;
-	t_flags flags;
+	size_t	i;
+	t_flags	flags;
 
 	i = 0;
 	flags.mods = 0;
@@ -150,10 +140,10 @@ int ft_get_modflags(char *str, va_list arglst)
 	return (i + 2);
 }
 
-void ft_printf(char *str, ...)
+void	ft_printf(char *str, ...)
 {
-	va_list arglst;
-	int     stri;
+	va_list	arglst;
+	int		stri;
 
 	stri = 0;
 	va_start(arglst, str);
@@ -170,7 +160,7 @@ void ft_printf(char *str, ...)
 	va_end(arglst);
 }
 
-int main(void)
+int		main(void)
 {
 	ft_printf("Zaanse mayo %x\n", -23456);
 	printf("Zaanse mayo %x\n", -23456);

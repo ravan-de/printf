@@ -12,33 +12,33 @@
 
 #include "printf.h"
 
-char    *conv_un(va_list arglst, char *(*f)(uint64_t nb))
+char	*conv_un(va_list arglst, char *(*f)(uint64_t nb))
 {
-    return ((*f) ((uint64_t)va_arg(arglst, unsigned)));
+	return ((*f)((uint64_t)va_arg(arglst, unsigned)));
 }
 
-char    *conv_hu(va_list arglst, char *(*f)(uint64_t nb))
+char	*conv_hu(va_list arglst, char *(*f)(uint64_t nb))
 {
-    unsigned short  nb;
+	unsigned short	nb;
 
-    nb = (unsigned short)va_arg(arglst, unsigned);
-    return ((*f) ((uint64_t)nb));
+	nb = (unsigned short)va_arg(arglst, unsigned);
+	return ((*f)((uint64_t)nb));
 }
 
-char    *conv_hhu(va_list arglst, char *(*f)(uint64_t nb))
+char	*conv_hhu(va_list arglst, char *(*f)(uint64_t nb))
 {
-    unsigned char  nb;
+	unsigned char	nb;
 
-    nb = (unsigned char)va_arg(arglst, unsigned);
-    return ((*f) ((uint64_t)nb));
+	nb = (unsigned char)va_arg(arglst, unsigned);
+	return ((*f)((uint64_t)nb));
 }
 
-char    *conv_lu(va_list arglst, char *(*f)(uint64_t nb))
+char	*conv_lu(va_list arglst, char *(*f)(uint64_t nb))
 {
-    return ((*f) ((uint64_t)va_arg(arglst, unsigned long)));
+	return ((*f)((uint64_t)va_arg(arglst, unsigned long)));
 }
 
-char    *conv_llu(va_list arglst, char *(*f)(uint64_t nb))
+char	*conv_llu(va_list arglst, char *(*f)(uint64_t nb))
 {
-    return ((*f) (va_arg(arglst, uint64_t)));
+	return ((*f)(va_arg(arglst, uint64_t)));
 }

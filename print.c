@@ -16,10 +16,10 @@
 
 char	*ft_get_int(long long nb)
 {
-    char *str;
-	int i;
+	char	*str;
+	int		i;
 
-    str = ft_strnew(20);
+	str = ft_strnew(20);
 	i = 0;
 	if (nb == -9223372036854775808)
 	{
@@ -39,21 +39,20 @@ char	*ft_get_int(long long nb)
 		i--;
 		str[ft_strlen(str)] = nb / ft_power(10, i) % 10 + '0';
 	}
-    return (str);
+	return (str);
 }
 
-
-char    *ft_get_uns(uint64_t nb)
+char	*ft_get_uns(uint64_t nb)
 {
-    return (ft_convbase(nb, 10));
+	return (ft_convbase(nb, 10));
 }
 
-char    *ft_get_oct(uint64_t nb)
+char	*ft_get_oct(uint64_t nb)
 {
-    return (ft_convbase(nb, 8));
+	return (ft_convbase(nb, 8));
 }
 
-char    *ft_get_hex(uint64_t nb)
+char	*ft_get_hex(uint64_t nb)
 {
-    return (ft_convbase(nb, 16));
+	return (ft_convbase(nb, 16));
 }
