@@ -37,6 +37,7 @@ int		ft_get_fieldwidth(char *str, t_flags *flags)
 		flags->field_width = ft_atoi(&str[i]);
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
+    return (i);
 }
 
 int		ft_getmods(char *str)

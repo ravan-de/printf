@@ -115,7 +115,7 @@ int		ft_get_flags(char *str, va_list arglst)
 	i = 0;
 	flags.mods = 0;
 	flags.field_width = 0;
-	flags.precision = 0;
+	flags.precision = 6;
 	while (ft_getmods(&str[i]) != 0)
 	{
 		flags.mods |= ft_getmods(&str[i]);
@@ -157,12 +157,12 @@ int		main(void)
 {
 	int a;
 	int i;
-	long double b;
+	double b;
 
 	a = 10;
 	i = 0;
-	b = 10.5234565345345346346346;
-	ft_printf("Zaanse mayo %hhi\n", 3000);
-	printf("Double test: %hhi\n", 3000);
+	b = 10.123456789;
+	ft_printf("Zaanse mayo %f\n", b);
+	printf("Double test: %f\n", b);
 	return (1);
 }
