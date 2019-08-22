@@ -166,3 +166,5 @@ int		main(void)
 	printf("Double test: %f\n", b);
 	return (1);
 }
+
+//DONT FORGET THE PART OF THE MANPAGE BEFORE CONVERSIONS!!!!!!!
