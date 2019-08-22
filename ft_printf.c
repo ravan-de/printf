@@ -38,6 +38,7 @@ void	ft_apply_mods(char *str, t_flags flags)
 	char *finalstr;
 	int len;
 
+
 	if ((flags.mods & 1) == 1)
 		finalstr = ft_alt(str, flags);
 	else
@@ -70,7 +71,6 @@ void	ft_process_flags(va_list arglst, t_flags flags)
 	char	*(*conv_u[5]) (va_list arglst, char *(*f)(uint64_t nb));
 	char	*str;
 
-	str = NULL;
 	conv_i[0] = conv_int;
 	conv_i[1] = conv_h_int;
 	conv_i[2] = conv_hh_int;
@@ -100,51 +100,14 @@ void	ft_process_flags(va_list arglst, t_flags flags)
 	}
 	if (flags.conversion == 's')
 		str = ft_strdup(va_arg(arglst, char *));
+	if (flags.conversion == 'f' && flags.type != 5)
+		str = ft_get_double(va_arg(arglst, double), flags.precision);
+	if (flags.conversion == 'f' && flags.type == 5)
+		str = ft_get_ldouble(va_arg(arglst, long double), flags.precision);
 	ft_apply_mods(str, flags);
 }
 
-int		ft_getmods(char *str)
-{
-	if (*str == '#')
-		return (1);
-	if (*str == '-')
-		return (2);
-	if (*str == '+')
-		return (4);
-	if (*str == ' ')
-		return (8);
-	if (*str == '0')
-		return (16);
-	return (0);
-}
-
-int		ft_convflags(char *str)
-{
-	if (*str == 'd' || *str == 'i' || *str == 'c' || *str == 's' || *str == 'p'
-	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X' || *str == 'b')
-		return (*str);
-	return (-1);
-}
-
-int		ft_typeflags(char *str)
-{
-	int h;
-	int l;
-
-	h = 0;
-	l = 0;
-	while (str[h + l] == 'h')
-		h++;
-	while (str[h + l] == 'l')
-		l++;
-	if (h >= 0 && l == 0)
-		return (h);
-	if (l > 0 && h == 0)
-		return (2 + l);
-	return (-1);
-}
-
-int		ft_get_modflags(char *str, va_list arglst)
+int		ft_get_flags(char *str, va_list arglst)
 {
 	size_t	i;
 	t_flags	flags;
@@ -152,23 +115,18 @@ int		ft_get_modflags(char *str, va_list arglst)
 	i = 0;
 	flags.mods = 0;
 	flags.field_width = 0;
+	flags.precision = 0;
 	while (ft_getmods(&str[i]) != 0)
 	{
 		flags.mods |= ft_getmods(&str[i]);
 		i++;
 	}
-	if (str[i] > '0' && str[i] <= '9')
-		flags.field_width = ft_atoi(&str[i]);
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	if (str[i] == '.')
-		flags.precision = ft_atoi(&str[i]);
-	while (str[i] >= '0' && str[i] <= '9')
-		i++;
-	flags.type = ft_typeflags(&str[i]);
-	while (str[i] == 'l' || str[i] == 'h')
-		i++;
+	i += ft_get_fieldwidth(&str[i], &flags);
+	i += ft_get_precision(&str[i], &flags);
+	i += ft_typeflags(&str[i], &flags);
 	flags.conversion = ft_convflags(&str[i]);
+	if (flags.conversion == -1)
+		exit;
 	ft_process_flags(arglst, flags);
 	return (i + 2);
 }
@@ -183,7 +141,7 @@ void	ft_printf(char *str, ...)
 	while (str[stri] != '\0')
 	{
 		if (str[stri] == '%' && str[stri + 1] != '%')
-			stri += ft_get_modflags(&str[stri + 1], arglst);
+			stri += ft_get_flags(&str[stri + 1], arglst);
 		else
 		{
 			if (str[stri] == '%' && str[stri + 1] == '%')
@@ -198,8 +156,13 @@ void	ft_printf(char *str, ...)
 int		main(void)
 {
 	int a;
+	int i;
+	long double b;
 
 	a = 10;
-	ft_printf("Zaanse mayo %b\n", 6);
+	i = 0;
+	b = 10.5234565345345346346346;
+	ft_printf("Zaanse mayo %hhi\n", 3000);
+	printf("Double test: %hhi\n", 3000);
 	return (1);
 }

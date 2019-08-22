@@ -41,5 +41,13 @@ char			*ft_get_hex(uint64_t nb);
 char			*ft_get_bin(uint64_t nb);
 char			*ft_convbase(uint64_t nb, uint64_t base);
 char			*ft_get_int(long long nb);
+char			*ft_get_double(double nb, int precision);
+char    		*ft_get_ldouble(long double nb, int precision);
+
+int				ft_getmods(char *str);
+int				ft_get_fieldwidth(char *str, t_flags *flags);
+int				ft_get_precision(char *str, t_flags *flags);
+int				ft_typeflags(char *str, t_flags *flags);
+int				ft_convflags(char *str);
 
 #endif
