@@ -13,13 +13,13 @@
 #include "libft.h"
 #include "printf.h"
 
-char    *ft_decimals(double nb, int precision)
+char	*ft_decimals(double nb, int precision)
 {
-	long long value;
-	int        i;
-	int        zero;
+	long long	val;
+	int			i;
+	int			nul;
 
-	zero = 0;
+	nul = 0;
 	i = 0;
 	if (nb < 0)
 		nb *= -1;
@@ -28,24 +28,24 @@ char    *ft_decimals(double nb, int precision)
 		i++;
 		nb *= 10;
 		if ((long long)nb == 0)
-			zero++;
+			nul++;
 	}
-	value = (long long)nb;
-	nb -= value;
+	val = (long long)nb;
+	nb -= val;
 	if (nb > 0.5)
-		value += 1;
-	if (value == 0)
+		val += 1;
+	if (val == 0)
 		return (ft_memset(ft_strnew(precision), '0', precision));
-	return (ft_strjoin(ft_memset(ft_strnew(zero), '0', zero), ft_get_int(value)));
+	return (ft_strjoin(ft_memset(ft_strnew(nul), '0', nul), ft_get_int(val)));
 }
 
-char    *ft_ldecimals(long double nb, int precision)
+char	*ft_ldecimals(long double nb, int precision)
 {
-	long long   value;
-	int         i;
-	int         zero;
+	long long	val;
+	int			i;
+	int			nul;
 
-	zero = 0;
+	nul = 0;
 	i = 0;
 	if (nb < 0)
 		nb *= -1;
@@ -54,23 +54,23 @@ char    *ft_ldecimals(long double nb, int precision)
 		i++;
 		nb *= 10;
 		if ((long long)nb == 0)
-			zero++;
+			nul++;
 	}
-	value = (long long)nb;
-	nb -= value;
+	val = (long long)nb;
+	nb -= val;
 	if (nb > 0.5)
-		value += 1;
-	if (value == 0)
+		val += 1;
+	if (val == 0)
 		return (ft_memset(ft_strnew(precision), '0', precision));
-	return (ft_strjoin(ft_memset(ft_strnew(zero), '0', zero), ft_get_int(value)));
+	return (ft_strjoin(ft_memset(ft_strnew(nul), '0', nul), ft_get_int(val)));
 }
 
-char    *ft_get_double(double nb, int precision)
+char	*ft_get_double(double nb, int precision)
 {
-	char        *str;
-	char        *decimals;
-	char        *temp;
-	long long   value;
+	char		*str;
+	char		*decimals;
+	char		*temp;
+	long long	value;
 
 	decimals = NULL;
 	value = (long long)nb;
@@ -93,12 +93,12 @@ char    *ft_get_double(double nb, int precision)
 	return (str);
 }
 
-char    *ft_get_ldouble(long double nb, int precision)
+char	*ft_get_ldouble(long double nb, int precision)
 {
-	char        *str;
-	char        *decimals;
-	char        *temp;
-	long long   value;
+	char		*str;
+	char		*decimals;
+	char		*temp;
+	long long	value;
 
 	decimals = NULL;
 	value = (long long)nb;
