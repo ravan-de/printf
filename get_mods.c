@@ -22,6 +22,8 @@ int		ft_get_precision(char *str, t_flags *flags)
 	{
 		i++;
 		flags->precision = ft_atoi(&str[i]);
+		if (flags->precision < 0)
+			flags->precision = 6;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;

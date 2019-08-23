@@ -161,10 +161,11 @@ int		main(void)
 
 	a = 10;
 	i = 0;
-	b = 10.123456789;
-	ft_printf("Zaanse mayo %f\n", b);
-	printf("Double test: %f\n", b);
+	b = -10.566;
+	ft_printf("Zaanse mayo %.-1f\n", b);
+	printf("Double test: %.-1f\n", b);
 	return (1);
 }
 
 //DONT FORGET THE PART OF THE MANPAGE BEFORE CONVERSIONS!!!!!!!
+//L with flags other than f segfaults
