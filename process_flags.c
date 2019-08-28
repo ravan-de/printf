@@ -34,10 +34,9 @@ void	ft_init_uns(char *(*conv_u[5]) (va_list arglst, t_get_uns func))
 void    ft_process_extra(va_list arglst, t_flags flags, char **str)
 {
 	if (flags.conversion == 'c')
-	{
-		*str = ft_strnew(1);
-		(*str)[0] = (char)va_arg(arglst, int);
-	}
+		*str = ft_memset(ft_strnew(1), (char)va_arg(arglst, int), 1);
+	if (flags.conversion == '%')
+		*str = ft_memset(ft_strnew(1), '%', 1);
 	if (flags.conversion == 's')
 		*str = ft_strdup(va_arg(arglst, char *));
 	if (flags.conversion == 'f' && flags.type != 5)

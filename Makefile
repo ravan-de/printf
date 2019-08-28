@@ -42,7 +42,7 @@ $(NAME): $(OBJ) $(LIBFTOBJ)
 %.o: libft/%.c
 	gcc -Wall -Wextra -Werror -c -o $@ $^ -I $(INCL)
 
-test: $(NAME)
+test: $(NAME) main.c
 	gcc -o $@ -Wall -Wextra -Werror main.c $(NAME) -I $(INCL)
 
 clean:

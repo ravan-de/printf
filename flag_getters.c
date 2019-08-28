@@ -87,7 +87,7 @@ int		ft_convflags(char *str)
 {
 	if (*str == 'd' || *str == 'i' || *str == 'c' || *str == 's' || *str == 'p'
 	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X' || *str == 'b'
-	|| *str == 'f')
+	|| *str == 'f' || *str == '%');
 		return (*str);
 	return (-1);
 }
