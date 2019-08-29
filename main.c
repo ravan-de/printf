@@ -4,9 +4,15 @@
 
 int main(void)
 {
-    #define FORMAT "Alleen maar %s mayo %.20f%c vet\n"
-    printf(FORMAT, "zaanse", 0.3, '%');
-    ft_printf(FORMAT, "zaanse", 0.3, '%');
-    printf("%5%\n");
-    ft_printf("%5%\n");
+    int ret;
+    int myret;
+    #define FORMAT "test %#010x"
+    
+    ret = printf(FORMAT, 420);
+    ft_putendl("");
+    myret = ft_printf(FORMAT, 420);
+    ft_putendl("");
+    ft_printf("ret: %d\n", ret);
+    ft_printf("myret: %d\n", myret);
+    return (0);
 }

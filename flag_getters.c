@@ -22,8 +22,6 @@ int		ft_get_precision(char *str, t_flags *flags)
 	{
 		i++;
 		flags->precision = ft_atoi(&str[i]);
-		if (flags->precision < 0)
-			flags->precision = 6;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
@@ -87,7 +85,7 @@ int		ft_convflags(char *str)
 {
 	if (*str == 'd' || *str == 'i' || *str == 'c' || *str == 's' || *str == 'p'
 	|| *str == 'u' || *str == 'o' || *str == 'x' || *str == 'X' || *str == 'b'
-	|| *str == 'f' || *str == '%');
+	|| *str == 'f' || *str == '%')
 		return (*str);
 	return (-1);
 }

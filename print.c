@@ -23,7 +23,7 @@ char	*ft_get_int(long long nb)
 	i = 0;
 	if (nb == -9223372036854775808)
 	{
-		strcpy(str, "-922337203685477580");
+		ft_strcpy(str, "-922337203685477580");
 		nb = 8;
 	}
 	if (nb < 0)
