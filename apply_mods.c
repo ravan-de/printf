@@ -13,25 +13,6 @@
 #include "printf.h"
 #include "libft.h"
 
-void	ft_capitalize(char *s)
-{
-	*s = ft_toupper(*s);
-}
-
-char	*ft_alt(char *str, int conv, int len)
-{
-	char	*retstr;
-
-	if (len < 0)
-		len = 0;
-	retstr = NULL;
-	if ((conv == 'x' || conv == 'X') && str[len] != '0')
-		retstr = ft_strjoin("0x", str);
-	else if (conv == 'o' && str[len] != '0')
-		retstr = ft_strjoin("0", str);
-	return (retstr);
-}
-
 void	ft_putstr_prec(char *str, int precision)
 {
 	int i;
@@ -44,52 +25,66 @@ void	ft_putstr_prec(char *str, int precision)
 	}
 }
 
-char	*ft_prec(char *str, int precision, int conv, int mods)
+void	ft_capitalize(char *s)
 {
-	char	*finalstr;
-	char	*tempstr;
-	char	*tempstr2;
-	int		len;
-
-	finalstr = NULL;
-	len = precision - ft_strlen(str);
-	if ((conv == 'd' || conv == 'i' || conv == 'u' || conv == 'o' 
-	|| conv == 'x' || conv == 'X') && len > 0)
-	{
-		tempstr = ft_memset(ft_strnew(len), '0', len);
-		tempstr2 = ft_strjoin(tempstr, str);
-		free(tempstr);
-	}
-	else
-		tempstr2 = str;
-	if ((mods & 1) == 1)
-		finalstr = ft_alt(tempstr2, conv, len);
-	if (finalstr == NULL)
-		return (tempstr2);
-	free(tempstr2);
-	return (finalstr);
+	*s = ft_toupper(*s);
 }
 
-void	ft_field_width(char *str, t_flags *flags)
+void	ft_alt(char **str, int conv, int len)
+{
+	if ((conv == 'x' || conv == 'X') && (*str)[len] != '0')
+		*str = ft_strjoin("0x", *str);
+	else if (conv == 'o' && (*str)[len] != '0')
+		*str = ft_strjoin("0", *str);
+}
+
+int		ft_field_width(char **str, int field_width, int mods)
 {
 	char	*tempstr;
-	//char	*tempstr2;
 	int		len;
 
-	len = flags->field_width - ft_strlen(str);
+	len = field_width - ft_strlen(*str);
 	if (len > 0)
 	{
-		if ((flags->mods & 18) == 16)
+		if ((mods & 18) == 16)
 			tempstr = ft_memset(ft_strnew(len), '0', len);
 		else
 			tempstr = ft_memset(ft_strnew(len), ' ', len);
-		if ((flags->mods & 2) == 2)
-			str = ft_strjoin(str, tempstr);
+		if ((mods & 2) == 2)
+			*str = ft_strjoin(*str, tempstr);
 		else
-			str = ft_strjoin(tempstr, str);
+			*str = ft_strjoin(tempstr, *str);
 		free(tempstr);
-		return (str);
 	}
+	else
+		len = 0;
+	return (len);
+}
+
+void	ft_prec(char **str, t_flags *flags)
+{
+	char	*finalstr;
+	char	*tempstr;
+	int		len;
+
+	finalstr = NULL;
+	len = flags->precision - ft_strlen(*str);
+	if ((flags->conversion == 'd' || flags->conversion == 'i' ||
+	flags->conversion == 'u' || flags->conversion == 'o'
+	|| flags->conversion == 'x' || flags->conversion == 'X') && len > 0)
+	{
+		tempstr = ft_memset(ft_strnew(len), '0', len);
+		*str = ft_strjoin(tempstr, *str);
+		free(tempstr);
+	}
+	if (len < 0)
+		len = 0;
+	if ((flags->mods & 18) == 16)
+		len += ft_field_width(str, flags->field_width, flags->mods);
+	if ((flags->mods & 1) == 1)
+		ft_alt(str, flags->conversion, len);
+	if ((flags->mods & 18) == 18)
+		ft_field_width(str, flags->field_width, flags->mods);
 }
 
 void	ft_apply_mods(char *str, t_flags *flags)
@@ -97,7 +92,9 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	char	*finalstr;
 	char	*tempstr;
 
-	finalstr = ft_prec(str, flags->precision, flags->conversion, flags->mods);
+	if ((flags->conversion == 'x' || flags->conversion == 'X') && (*str)[len] != '0')
+		f
+	ft_prec(&str, flags);
 	if (flags->conversion == 'X')
 		ft_striter(finalstr, ft_capitalize);
 	if ((flags->mods & 4) == 4 && str[0] != '-')
@@ -107,3 +104,5 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	flags->len = ft_strlen(str);
 	ft_putstr(str);
 }
+
+//nieuw plan: maak string van goeie lengte en kopier alles hier naartoe!
