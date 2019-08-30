@@ -30,79 +30,79 @@ void	ft_capitalize(char *s)
 	*s = ft_toupper(*s);
 }
 
-void	ft_alt(char **str, int conv, int len)
+const char	*ft_get_extra(char *str, t_flags *flags)
 {
-	if ((conv == 'x' || conv == 'X') && (*str)[len] != '0')
-		*str = ft_strjoin("0x", *str);
-	else if (conv == 'o' && (*str)[len] != '0')
-		*str = ft_strjoin("0", *str);
-}
-
-int		ft_field_width(char **str, int field_width, int mods)
-{
-	char	*tempstr;
-	int		len;
-
-	len = field_width - ft_strlen(*str);
-	if (len > 0)
+	if ((flags->mods & 1) == 1)
 	{
-		if ((mods & 18) == 16)
-			tempstr = ft_memset(ft_strnew(len), '0', len);
-		else
-			tempstr = ft_memset(ft_strnew(len), ' ', len);
-		if ((mods & 2) == 2)
-			*str = ft_strjoin(*str, tempstr);
-		else
-			*str = ft_strjoin(tempstr, *str);
-		free(tempstr);
+		if ((flags->conversion == 'x' || flags->conversion == 'X') && str[0] != '0')
+			return ("0x");
+		if (flags->conversion == 'o' && str[0] != '0')
+			return ("0");
 	}
-	else
-		len = 0;
-	return (len);
+	if ((flags->mods & 4) == 4 && str[0] != '-')
+		return ("+");
+	if ((flags->mods & 12) == 8 && str[0] != '-')
+		return (" ");		
+	return (NULL);
 }
 
-void	ft_prec(char **str, t_flags *flags)
+char	*ft_fill_str(char *str, const char *extrastr, t_flags *flags, int preclen, int width)
 {
 	char	*finalstr;
-	char	*tempstr;
-	int		len;
+	int		strlen;
+	int		extralen;
 
-	finalstr = NULL;
-	len = flags->precision - ft_strlen(*str);
-	if ((flags->conversion == 'd' || flags->conversion == 'i' ||
-	flags->conversion == 'u' || flags->conversion == 'o'
-	|| flags->conversion == 'x' || flags->conversion == 'X') && len > 0)
-	{
-		tempstr = ft_memset(ft_strnew(len), '0', len);
-		*str = ft_strjoin(tempstr, *str);
-		free(tempstr);
-	}
-	if (len < 0)
-		len = 0;
+	extralen = 0;
+	strlen = ft_strlen(str);
+	if (extrastr != NULL)
+		extralen = ft_strlen(extralen);
+	finalstr = ft_strnew(width + preclen + strlen + extralen);
 	if ((flags->mods & 18) == 16)
-		len += ft_field_width(str, flags->field_width, flags->mods);
-	if ((flags->mods & 1) == 1)
-		ft_alt(str, flags->conversion, len);
-	if ((flags->mods & 18) == 18)
-		ft_field_width(str, flags->field_width, flags->mods);
+	{
+		if (extrastr != NULL)
+			ft_strcpy(&finalstr[ft_strlen(finalstr)], extrastr);
+		ft_memset(&finalstr[ft_strlen(finalstr)], '0', width + preclen);
+	}
+	if ((flags->mods & 2) != 2)
+		ft_memset(&finalstr[ft_strlen(finalstr)], ' ', width);
+	if (extrastr != NULL && (flags->mods & 18) != 16)
+		ft_strcpy(&finalstr[ft_strlen(finalstr)], extrastr);
+	if (preclen > 0 && (flags->mods & 18) != 16)
+		ft_memset(&finalstr[ft_strlen(finalstr)], '0', preclen);
+	ft_strcpy(&finalstr[ft_strlen(finalstr)], str);
+	if ((flags->mods & 2) == 2)
+		ft_memset(&finalstr[ft_strlen(finalstr)], ' ', width);
+	return (finalstr);
 }
 
 void	ft_apply_mods(char *str, t_flags *flags)
 {
-	char	*finalstr;
-	char	*tempstr;
+	char		*finalstr;
+	const char	*extrastr;
+	int			strlen;
+	int			width;
+	int			preclen;
 
-	if ((flags->conversion == 'x' || flags->conversion == 'X') && (*str)[len] != '0')
-		f
-	ft_prec(&str, flags);
+	width = 0;
+	preclen = 0;
+	strlen = ft_strlen(str);
+	extrastr = ft_get_extra(str, flags);
+	if (extrastr != NULL)
+		flags->field_width -= ft_strlen(extrastr);
+	if ((flags->conversion == 'd' || flags->conversion == 'i' ||
+	flags->conversion == 'u' || flags->conversion == 'o'
+	|| flags->conversion == 'x' || flags->conversion == 'X'))
+	{
+		if (flags->precision > strlen)
+			preclen = flags->precision - strlen;
+	}
+	if (flags->field_width - preclen > strlen)
+		width = flags->field_width - strlen - preclen;
+	finalstr = ft_fill_str(str, extrastr, flags, preclen, width);
 	if (flags->conversion == 'X')
 		ft_striter(finalstr, ft_capitalize);
-	if ((flags->mods & 4) == 4 && str[0] != '-')
-		finalstr = ft_strjoin("+", str);
-	if ((flags->mods & 12) == 8 && str[0] != '-')
-		finalstr = ft_strjoin(" ", str);
-	flags->len = ft_strlen(str);
-	ft_putstr(str);
+	flags->len = ft_strlen(finalstr);
+	ft_putstr(finalstr);
 }
 
 //nieuw plan: maak string van goeie lengte en kopier alles hier naartoe!

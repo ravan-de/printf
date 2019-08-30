@@ -6,13 +6,13 @@ int main(void)
 {
     int ret;
     int myret;
-    #define FORMAT "test %#010x"
+    #define FORMAT "test %5x\n"
     
     ret = printf(FORMAT, 420);
     ft_putendl("");
     myret = ft_printf(FORMAT, 420);
     ft_putendl("");
-    ft_printf("ret: %d\n", ret);
-    ft_printf("myret: %d\n", myret);
+    printf("ret: %d\n", ret);
+    printf("myret: %d\n", myret);
     return (0);
 }
