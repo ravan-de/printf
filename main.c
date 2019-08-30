@@ -6,7 +6,7 @@ int main(void)
 {
     int ret;
     int myret;
-    #define FORMAT "test %5x\n"
+    #define FORMAT "test %10d\n"
     
     ret = printf(FORMAT, 420);
     ft_putendl("");

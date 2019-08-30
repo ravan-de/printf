@@ -19,10 +19,10 @@
 typedef struct	s_flags
 {
 	int mods;
-	int field_width;
-	int precision;
+	int width;
+	int prec;
 	int type;
-	int conversion;
+	int conv;
 	int len;
 }				t_flags;
 

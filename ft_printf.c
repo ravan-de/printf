@@ -20,8 +20,8 @@ int		ft_get_flags(char *str, va_list arglst, t_flags *flags)
 
 	i = 0;
 	flags->mods = 0;
-	flags->field_width = 0;
-	flags->precision = -1;
+	flags->width = 0;
+	flags->prec = -1;
 	while (ft_getmods(&str[i]) != 0)
 	{
 		flags->mods |= ft_getmods(&str[i]);
@@ -30,11 +30,11 @@ int		ft_get_flags(char *str, va_list arglst, t_flags *flags)
 	i += ft_get_fieldwidth(&str[i], flags);
 	i += ft_get_precision(&str[i], flags);
 	i += ft_typeflags(&str[i], flags);
-	flags->conversion = ft_convflags(&str[i]);
-	if (flags->conversion == -1)
+	flags->conv = ft_convflags(&str[i]);
+	if (flags->conv == -1)
 		ft_putstr("flag_error");
-	if (flags->conversion == 'f' && flags->precision == -1)
-		flags->precision = 6;
+	if (flags->conv == 'f' && flags->prec == -1)
+		flags->prec = 6;
 	ft_process_flags(arglst, flags);
 	return (i + 2);
 }

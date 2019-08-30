@@ -33,16 +33,16 @@ void	ft_init_uns(char *(*conv_u[5]) (va_list arglst, t_get_uns func))
 
 void    ft_process_extra(va_list arglst, t_flags *flags, char **str)
 {
-	if (flags->conversion == 'c')
+	if (flags->conv == 'c')
 		*str = ft_memset(ft_strnew(1), (char)va_arg(arglst, int), 1);
-	if (flags->conversion == '%')
+	if (flags->conv == '%')
 		*str = ft_memset(ft_strnew(1), '%', 1);
-	if (flags->conversion == 's')
+	if (flags->conv == 's')
 		*str = ft_strdup(va_arg(arglst, char *));
-	if (flags->conversion == 'f' && flags->type != 5)
-		*str = ft_get_double(va_arg(arglst, double), flags->precision);
-	if (flags->conversion == 'f' && flags->type == 5)
-		*str = ft_get_ldouble(va_arg(arglst, long double), flags->precision);
+	if (flags->conv == 'f' && flags->type != 5)
+		*str = ft_get_double(va_arg(arglst, double), flags->prec);
+	if (flags->conv == 'f' && flags->type == 5)
+		*str = ft_get_ldouble(va_arg(arglst, long double), flags->prec);
 }
 
 void	ft_process_flags(va_list arglst, t_flags *flags)
@@ -53,17 +53,17 @@ void	ft_process_flags(va_list arglst, t_flags *flags)
 
 	ft_init_uns(conv_u);
 	ft_init_int(conv_i);
-	if (flags->conversion == 'i' || flags->conversion == 'd')
+	if (flags->conv == 'i' || flags->conv == 'd')
 		str = (*conv_i[flags->type])(arglst, ft_get_int);
-	if (flags->conversion == 'u')
+	if (flags->conv == 'u')
 		str = (*conv_u[flags->type])(arglst, ft_get_uns);
-	if (flags->conversion == 'o')
+	if (flags->conv == 'o')
 		str = (*conv_u[flags->type])(arglst, ft_get_oct);
-	if (flags->conversion == 'x' || flags->conversion == 'X')
+	if (flags->conv == 'x' || flags->conv == 'X')
 		str = (*conv_u[flags->type])(arglst, ft_get_hex);
-	if (flags->conversion == 'p')
+	if (flags->conv == 'p')
 		str = ft_strjoin("0x7fff", (*conv_u[0])(arglst, ft_get_hex));
-	if (flags->conversion == 'b')
+	if (flags->conv == 'b')
 		str = (*conv_u[flags->type])(arglst, ft_get_bin);
     ft_process_extra(arglst, flags, &str);
 	ft_apply_mods(str, flags);

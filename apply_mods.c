@@ -30,79 +30,75 @@ void	ft_capitalize(char *s)
 	*s = ft_toupper(*s);
 }
 
-const char	*ft_get_extra(char *str, t_flags *flags)
+char	*ft_get_extra(char *str, t_flags *flags)
 {
 	if ((flags->mods & 1) == 1)
 	{
-		if ((flags->conversion == 'x' || flags->conversion == 'X') && str[0] != '0')
+		if ((flags->conv == 'x' || flags->conv == 'X') && str[0] != '0')
 			return ("0x");
-		if (flags->conversion == 'o' && str[0] != '0')
+		if (flags->conv == 'o' && str[0] != '0')
 			return ("0");
 	}
 	if ((flags->mods & 4) == 4 && str[0] != '-')
 		return ("+");
 	if ((flags->mods & 12) == 8 && str[0] != '-')
-		return (" ");		
+		return (" ");
 	return (NULL);
 }
 
-char	*ft_fill_str(char *str, const char *extrastr, t_flags *flags, int preclen, int width)
+char	*ft_fill(char *str, char *extrastr, t_flags *flags)
 {
-	char	*finalstr;
+	char	*ret;
 	int		strlen;
 	int		extralen;
 
 	extralen = 0;
 	strlen = ft_strlen(str);
 	if (extrastr != NULL)
-		extralen = ft_strlen(extralen);
-	finalstr = ft_strnew(width + preclen + strlen + extralen);
+		extralen = ft_strlen(extrastr);
+	ret = ft_strnew(flags->width + flags->prec + strlen + extralen);
 	if ((flags->mods & 18) == 16)
 	{
 		if (extrastr != NULL)
-			ft_strcpy(&finalstr[ft_strlen(finalstr)], extrastr);
-		ft_memset(&finalstr[ft_strlen(finalstr)], '0', width + preclen);
+			ft_strcpy(&ret[ft_strlen(ret)], extrastr);
+		ft_memset(&ret[ft_strlen(ret)], '0', flags->width + flags->prec);
 	}
-	if ((flags->mods & 2) != 2)
-		ft_memset(&finalstr[ft_strlen(finalstr)], ' ', width);
+	if ((flags->mods & 18) == 0)
+		ft_memset(&ret[ft_strlen(ret)], ' ', flags->width);
 	if (extrastr != NULL && (flags->mods & 18) != 16)
-		ft_strcpy(&finalstr[ft_strlen(finalstr)], extrastr);
-	if (preclen > 0 && (flags->mods & 18) != 16)
-		ft_memset(&finalstr[ft_strlen(finalstr)], '0', preclen);
-	ft_strcpy(&finalstr[ft_strlen(finalstr)], str);
+		ft_strcpy(&ret[ft_strlen(ret)], extrastr);
+	if (flags->prec > 0 && (flags->mods & 18) != 16)
+		ft_memset(&ret[ft_strlen(ret)], '0', flags->prec);
+	ft_strcpy(&ret[ft_strlen(ret)], str);
 	if ((flags->mods & 2) == 2)
-		ft_memset(&finalstr[ft_strlen(finalstr)], ' ', width);
-	return (finalstr);
+		ft_memset(&ret[ft_strlen(ret)], ' ', flags->width);
+	return (ret);
 }
 
 void	ft_apply_mods(char *str, t_flags *flags)
 {
-	char		*finalstr;
-	const char	*extrastr;
-	int			strlen;
-	int			width;
-	int			preclen;
+	char	*finalstr;
+	char	*extrastr;
+	int		strlen;
 
-	width = 0;
-	preclen = 0;
 	strlen = ft_strlen(str);
 	extrastr = ft_get_extra(str, flags);
 	if (extrastr != NULL)
-		flags->field_width -= ft_strlen(extrastr);
-	if ((flags->conversion == 'd' || flags->conversion == 'i' ||
-	flags->conversion == 'u' || flags->conversion == 'o'
-	|| flags->conversion == 'x' || flags->conversion == 'X'))
+		flags->width -= ft_strlen(extrastr);
+	if (flags->width < 0)
+		flags->width = 0;
+	if ((flags->conv == 'd' || flags->conv == 'i' ||
+	flags->conv == 'u' || flags->conv == 'o'
+	|| flags->conv == 'x' || flags->conv == 'X'))
 	{
-		if (flags->precision > strlen)
-			preclen = flags->precision - strlen;
+		if (flags->prec > strlen)
+			flags->prec = flags->prec - strlen;
 	}
-	if (flags->field_width - preclen > strlen)
-		width = flags->field_width - strlen - preclen;
-	finalstr = ft_fill_str(str, extrastr, flags, preclen, width);
-	if (flags->conversion == 'X')
+	if (flags->width - flags->prec > strlen)
+		flags->width -= strlen + flags->prec;
+	finalstr = ft_fill(str, extrastr, flags);
+	if (flags->conv == 'X')
 		ft_striter(finalstr, ft_capitalize);
 	flags->len = ft_strlen(finalstr);
 	ft_putstr(finalstr);
 }
-
-//nieuw plan: maak string van goeie lengte en kopier alles hier naartoe!

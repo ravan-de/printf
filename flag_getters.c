@@ -21,7 +21,7 @@ int		ft_get_precision(char *str, t_flags *flags)
 	if (str[i] == '.')
 	{
 		i++;
-		flags->precision = ft_atoi(&str[i]);
+		flags->prec = ft_atoi(&str[i]);
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
@@ -34,7 +34,7 @@ int		ft_get_fieldwidth(char *str, t_flags *flags)
 
 	i = 0;
 	if (str[i] > '0' && str[i] <= '9')
-		flags->field_width = ft_atoi(&str[i]);
+		flags->width = ft_atoi(&str[i]);
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
     return (i);
