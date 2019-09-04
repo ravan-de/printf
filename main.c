@@ -6,13 +6,13 @@ int main(void)
 {
     int ret;
     int myret;
-    #define FORMAT "test %10d\n"
+    #define FORMAT "test %#.0x\n"
     
-    ret = printf(FORMAT, 420);
-    ft_putendl("");
-    myret = ft_printf(FORMAT, 420);
-    ft_putendl("");
+    ret = printf(FORMAT, 1);
+    myret = ft_printf(FORMAT, 1);
     printf("ret: %d\n", ret);
     printf("myret: %d\n", myret);
     return (0);
 }
+
+//if str[0] == '0' don't add extra 0;

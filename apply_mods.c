@@ -34,9 +34,9 @@ char	*ft_get_extra(char *str, t_flags *flags)
 {
 	if ((flags->mods & 1) == 1)
 	{
-		if ((flags->conv == 'x' || flags->conv == 'X') && str[0] != '0')
+		if ((flags->conv == 'x' || flags->conv == 'X') && str[0] != '0' && str[0] != '\0')
 			return ("0x");
-		if (flags->conv == 'o' && str[0] != '0')
+		if (flags->conv == 'o' && str[0] != '0' && flags->prec <= ft_strlen(str))
 			return ("0");
 	}
 	if ((flags->mods & 4) == 4 && str[0] != '-')
@@ -53,9 +53,9 @@ char	*ft_fill(char *str, char *extrastr, t_flags *flags)
 	int		extralen;
 
 	extralen = 0;
-	strlen = ft_strlen(str);
 	if (extrastr != NULL)
 		extralen = ft_strlen(extrastr);
+	strlen = ft_strlen(str);
 	ret = ft_strnew(flags->width + flags->prec + strlen + extralen);
 	if ((flags->mods & 18) == 16)
 	{
@@ -81,21 +81,26 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	char	*extrastr;
 	int		strlen;
 
+	if (flags->prec == -1)
+		flags->prec = 0;
+	if (str[0] == '0' && flags->prec == 0)
+		str[0] = '\0';
 	strlen = ft_strlen(str);
 	extrastr = ft_get_extra(str, flags);
 	if (extrastr != NULL)
 		flags->width -= ft_strlen(extrastr);
-	if (flags->width < 0)
-		flags->width = 0;
 	if ((flags->conv == 'd' || flags->conv == 'i' ||
 	flags->conv == 'u' || flags->conv == 'o'
 	|| flags->conv == 'x' || flags->conv == 'X'))
 	{
 		if (flags->prec > strlen)
 			flags->prec = flags->prec - strlen;
+		else
+			flags->prec = 0;
 	}
-	if (flags->width - flags->prec > strlen)
-		flags->width -= strlen + flags->prec;
+	flags->width -= strlen + flags->prec;
+	if (flags->width < 0)
+		flags->width = 0;
 	finalstr = ft_fill(str, extrastr, flags);
 	if (flags->conv == 'X')
 		ft_striter(finalstr, ft_capitalize);
