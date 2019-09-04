@@ -6,10 +6,10 @@ int main(void)
 {
     int ret;
     int myret;
-    #define FORMAT "test %#.0x\n"
+    #define FORMAT "test %s\n"
     
-    ret = printf(FORMAT, 1);
-    myret = ft_printf(FORMAT, 1);
+    ret = printf(FORMAT, "lol");
+    myret = ft_printf(FORMAT, "lol");
     printf("ret: %d\n", ret);
     printf("myret: %d\n", myret);
     return (0);
