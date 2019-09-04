@@ -13,18 +13,6 @@
 #include "printf.h"
 #include "libft.h"
 
-void	ft_putstr_prec(char *str, int precision)
-{
-	int i;
-
-	i = 0;
-	while (i < precision)
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
-}
-
 void	ft_capitalize(char *s)
 {
 	*s = ft_toupper(*s);
@@ -81,7 +69,7 @@ char	*ft_numbers(char **str, t_flags *flags)
 	char	*extrastr;
 
 	if (flags->prec == -1)
-		flags->prec = 0;
+		flags->prec = 1;
 	if ((*str)[0] == '0' && flags->prec == 0)
 		(*str)[0] = '\0';
 	strlen = ft_strlen(*str);
@@ -126,13 +114,18 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	{
 		extrastr = ft_numbers(&str, flags);
 	}
-	else
+	else if (flags->conv == 's')
 		ft_string(&str, flags);
+	else
+	{
+		flags->prec = 0;
+		flags->width -= 1;
+	}	
 	if (flags->width < 0)
 		flags->width = 0;
 	finalstr = ft_fill(str, extrastr, flags);
 	if (flags->conv == 'X')
 		ft_striter(finalstr, ft_capitalize);
-	flags->len = ft_strlen(finalstr);
+	flags->len += ft_strlen(finalstr);
 	ft_putstr(finalstr);
 }
