@@ -97,9 +97,9 @@ char	*ft_get_double(double nb, int precision)
 		value += 1;
 	if (precision == 0 && nb < -0.5)
 		value -= 1;
-	if (precision == 0 && nb == 0.5 && (value + 1) % 2 == 0)
+	if (precision == 0 && nb == 0.5 && value % 2 != 0)
 		value += 1;
-	if (precision == 0 && nb == -0.5 && (value - 1) % 2 == 0)
+	if (precision == 0 && nb == -0.5 && value % 2 != 0)
 		value -= 1;
 	str = ft_get_int(value);
 	if (precision > 0)
@@ -114,13 +114,13 @@ char	*ft_get_ldouble(long double nb, int precision)
 
 	value = (long long)nb;
 	nb -= value;
-	if (precision == 0 && nb * ft_power(10, 6) > 0.5)
+	if (precision == 0 && nb > 0.5)
 		value += 1;
-	if (precision == 0 && nb * ft_power(10, 6) < -0.5)
+	if (precision == 0 && nb < -0.5)
 		value -= 1;
-	if (precision == 0 && nb == 0.5 && (value + 1) % 2 == 0)
+	if (precision == 0 && nb == 0.5 && value % 2 != 0)
 		value += 1;
-	if (precision == 0 && nb == -0.5 && (value - 1) % 2 == 0)
+	if (precision == 0 && nb == -0.5 && value % 2 != 0)
 		value -= 1;
 	str = ft_get_int(value);
 	if (precision > 0)
