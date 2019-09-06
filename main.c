@@ -8,9 +8,9 @@ int main(void)
     int ret;
     int myret;
 
-    f = -5.5;
-    ret = printf("real %.0f\n", f);
-    myret = ft_printf("fake %.0f\n", f);
+    f = 4;
+    ret = printf("real %.5f\n", f);
+    myret = ft_printf("fake %.5f\n", f);
     printf("ret: %d\n", ret);
     printf("myret: %d\n", myret);
     return (0);
