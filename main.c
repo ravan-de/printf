@@ -4,15 +4,14 @@
 
 int main(void)
 {
+    float   f;
     int ret;
     int myret;
-    #define FORMAT "test %2%\n"
-    
-    ret = printf(FORMAT);
-    myret = ft_printf(FORMAT);
+
+    f = -5.5;
+    ret = printf("real %.0f\n", f);
+    myret = ft_printf("fake %.0f\n", f);
     printf("ret: %d\n", ret);
     printf("myret: %d\n", myret);
     return (0);
 }
-
-//if str[0] == '0' don't add extra 0

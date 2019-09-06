@@ -32,7 +32,7 @@ char	*ft_decimals(double nb, int precision)
 	}
 	val = (long long)nb;
 	nb -= val;
-	if (nb > 0.5)
+	if (nb > (double)0.5)
 		val += 1;
 	if (val == 0)
 		return (ft_memset(ft_strnew(precision), '0', precision));
@@ -79,6 +79,10 @@ char	*ft_get_double(double nb, int precision)
 		value += 1;
 	if (precision == 0 && nb < -0.5)
 		value -= 1;
+	if (precision == 0 && nb == 0.5 && (value + 1) % 2 == 0)
+		value += 1;
+	if (precision == 0 && nb == -0.5 && (value - 1) % 2 == 0)
+		value -= 1;		
 	str = ft_get_int(value);
 	if (precision > 0)
 		decimals = ft_decimals(nb, precision);
@@ -103,9 +107,9 @@ char	*ft_get_ldouble(long double nb, int precision)
 	decimals = NULL;
 	value = (long long)nb;
 	nb -= value;
-	if (precision == 0 && nb > 0.5)
+	if (precision == 0 && nb * ft_power(10, 6) > 0.5)
 		value += 1;
-	if (precision == 0 && nb < -0.5)
+	if (precision == 0 && nb * ft_power(10, 6)< -0.5)
 		value -= 1;
 	str = ft_get_int(value);
 	if (precision > 0)

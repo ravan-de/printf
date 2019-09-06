@@ -45,6 +45,9 @@ $(NAME): $(OBJ) $(LIBFTOBJ)
 test: $(NAME) main.c
 	gcc -o $@ -Wall -Wextra -Werror main.c $(NAME) -I $(INCL)
 
+test2: $(NAME) test.c ft_bin.c
+	gcc -o $@ -Wall -Wextra -Werror test.c ft_bin.c $(NAME) -I $(INCL)
+
 clean:
 	rm -f *.o
 
