@@ -23,7 +23,7 @@ char	*ft_convbase(uint64_t nb, uint64_t base)
 	i = 0;
 	while (nb / ft_power(base, i) >= base)
 		i++;
-	str = ft_strnew(i);
+	str = ft_strnew(i + 1);
 	if (nb / ft_power(base, i) > 9)
 		str[c] = nb / ft_power(base, i) + 87;
 	else

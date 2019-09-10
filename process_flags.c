@@ -38,7 +38,7 @@ void    ft_process_extra(va_list arglst, t_flags *flags, char **str)
 	if (flags->conv == '%')
 		*str = ft_memset(ft_strnew(1), '%', 1);
 	if (flags->conv == 's')
-		*str = ft_strdup(va_arg(arglst, char *));
+		*str = va_arg(arglst, char *);
 	if (flags->conv == 'f' && flags->type != 5)
 		*str = ft_get_double(va_arg(arglst, double), flags->prec);
 	if (flags->conv == 'f' && flags->type == 5)
