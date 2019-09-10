@@ -15,17 +15,24 @@
 
 char	*ft_get_extra(char *str, t_flags *flags)
 {
+	if (flags->conv == 'p')
+		return ("0x");
 	if ((flags->mods & 1) == 1 && str[0] != '0' && str[0] != '\0')
 	{
-		if ((flags->conv == 'x' || flags->conv == 'X'))
+		if (flags->conv == 'x' || flags->conv == 'X')
 			return ("0x");
 		if (flags->conv == 'o' && flags->prec <= ft_strlen(str))
 			return ("0");
 	}
-	if ((flags->mods & 4) == 4 && str[0] != '-')
-		return ("+");
-	if ((flags->mods & 12) == 8 && str[0] != '-')
-		return (" ");
+	if (str[0] == '-')
+		return ("-");
+	if (flags->conv == 'd' || flags->conv == 'i' || flags->conv == 'f')
+	{
+		if ((flags->mods & 4) == 4)
+			return ("+");
+		if ((flags->mods & 12) == 8)
+			return (" ");
+	}
 	return (NULL);
 }
 
@@ -65,12 +72,18 @@ char	*ft_numbers(char **str, t_flags *flags)
 
 	if (flags->prec == -1)
 		flags->prec = 1;
+	else if ((flags->mods & 16) == 16)
+		flags->mods -= 16;
 	if ((*str)[0] == '0' && flags->prec == 0)
 		(*str)[0] = '\0';
-	strlen = ft_strlen(*str);
 	extrastr = ft_get_extra(*str, flags);
 	if (extrastr != NULL)
+	{
 		flags->width -= ft_strlen(extrastr);
+		if (*extrastr == '-')
+			ft_memmove(*str, &str[0][1], ft_strlen(*str));
+	}
+	strlen = ft_strlen(*str);
 	if (flags->prec > strlen)
 		flags->prec = flags->prec - strlen;
 	else
@@ -104,9 +117,10 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	int		strlen;
 
 	extrastr = NULL;
-	if ((flags->conv == 'd' || flags->conv == 'i' ||
-	flags->conv == 'u' || flags->conv == 'o'
-	|| flags->conv == 'x' || flags->conv == 'X'))
+	if (flags->conv == 'd' || flags->conv == 'i'
+	|| flags->conv == 'u' || flags->conv == 'o'
+	|| flags->conv == 'x' || flags->conv == 'X'
+	|| flags->conv == 'p')
 	{
 		extrastr = ft_numbers(&str, flags);
 	}

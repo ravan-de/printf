@@ -62,7 +62,7 @@ void	ft_process_flags(va_list arglst, t_flags *flags)
 	if (flags->conv == 'x' || flags->conv == 'X')
 		str = (*conv_u[flags->type])(arglst, ft_get_hex);
 	if (flags->conv == 'p')
-		str = ft_strjoin("0x7fff", (*conv_u[0])(arglst, ft_get_hex));
+		str = (*conv_u[4])(arglst, ft_get_hex);
 	if (flags->conv == 'b')
 		str = (*conv_u[flags->type])(arglst, ft_get_bin);
     ft_process_extra(arglst, flags, &str);

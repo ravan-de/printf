@@ -2,16 +2,20 @@
 #include "libft.h"
 #include <stdio.h>
 
+#define FORMAT " %p\n"
+
 int main(void)
 {
-    float   f;
-    int ret;
-    int myret;
+    static int  a;
+    int         b;
+    int         ret;
+    int         myret;
 
-    f = 4;
-    ret = printf("real %.5f\n", f);
-    myret = ft_printf("fake %.5f\n", f);
-    printf("ret: %d\n", ret);
-    printf("myret: %d\n", myret);
+    a = 20;
+    b = 20;
+    ret = printf(ft_strjoin("real", FORMAT), &b);
+    myret = ft_printf(ft_strjoin("fake", FORMAT), &b);
+    ft_printf("ret: %d\n", ret);
+    ft_printf("myret: %d\n", myret);
     return (0);
 }

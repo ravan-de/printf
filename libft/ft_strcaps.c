@@ -19,7 +19,7 @@ void	ft_strcaps(char **str)
 	i = 0;
 	while ((*str)[i] != '\0')
 	{
-		(*str)[i] = ft_toupper(*str);
+		(*str)[i] = ft_toupper((*str)[i]);
 		i++;
 	}
 }
