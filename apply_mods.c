@@ -13,18 +13,13 @@
 #include "printf.h"
 #include "libft.h"
 
-void	ft_capitalize(char *s)
-{
-	*s = ft_toupper(*s);
-}
-
 char	*ft_get_extra(char *str, t_flags *flags)
 {
-	if ((flags->mods & 1) == 1)
+	if ((flags->mods & 1) == 1 && str[0] != '0' && str[0] != '\0')
 	{
-		if ((flags->conv == 'x' || flags->conv == 'X') && str[0] != '0' && str[0] != '\0')
+		if ((flags->conv == 'x' || flags->conv == 'X'))
 			return ("0x");
-		if (flags->conv == 'o' && str[0] != '0' && flags->prec <= ft_strlen(str))
+		if (flags->conv == 'o' && flags->prec <= ft_strlen(str))
 			return ("0");
 	}
 	if ((flags->mods & 4) == 4 && str[0] != '-')
@@ -101,6 +96,7 @@ void	ft_string(char **str, t_flags *flags)
 	flags->width -= ft_strlen(*str);
 	flags->prec = 0;
 }
+
 void	ft_apply_mods(char *str, t_flags *flags)
 {
 	char	*finalstr;
@@ -120,12 +116,12 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	{
 		flags->prec = 0;
 		flags->width -= 1;
-	}	
+	}
 	if (flags->width < 0)
 		flags->width = 0;
 	finalstr = ft_fill(str, extrastr, flags);
 	if (flags->conv == 'X')
-		ft_striter(finalstr, ft_capitalize);
+		ft_strcaps(&finalstr);
 	flags->len += ft_strlen(finalstr);
 	ft_putstr(finalstr);
 }

@@ -87,5 +87,6 @@ int					ft_isprint(int c);
 int					ft_isspace(int c);
 char				ft_toupper(char c);
 int					ft_tolower(int c);
+void				ft_strcaps(char **str);
 
 #endif

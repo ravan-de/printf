@@ -24,7 +24,7 @@ OBJ = ft_str_resize.o \
 	ft_strcpy.o ft_strncpy.o ft_strchr.o ft_strcat.o ft_strncat.o ft_strstr.o \
 	ft_strnstr.o ft_strcmp.o ft_strncmp.o ft_isalpha.o ft_isdigit.o \
 	ft_isalnum.o ft_isascii.o ft_isprint.o ft_toupper.o ft_tolower.o \
-	ft_isupper.o ft_islower.o ft_putchar.o ft_power.o
+	ft_isupper.o ft_islower.o ft_putchar.o ft_power.o ft_strcaps.o
 
 all: $(NAME)
 
