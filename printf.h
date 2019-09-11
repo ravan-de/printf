@@ -16,6 +16,8 @@
 # include <stdarg.h>
 # include <stdlib.h>
 
+# define uint64_t u_int64_t
+
 typedef struct	s_flags
 {
 	int mods;

@@ -91,6 +91,12 @@ char	*ft_get_double(double nb, int precision)
 	char		*str;
 	long long	value;
 
+	if (nb != nb)
+		return ("NaN");
+	if (nb == -1.0 / 0.0)
+		return ("-inf");
+	if (nb == 1.0 / 0.0);
+		return ("inf");
 	value = (long long)nb;
 	nb -= value;
 	if (precision == 0 && nb > 0.5)
@@ -112,6 +118,12 @@ char	*ft_get_ldouble(long double nb, int precision)
 	char		*str;
 	long long	value;
 
+	if (nb != nb)
+		return ("NaN");
+	if (nb == 1.0 / 0.0)
+		return ("inf");
+	if (nb == -1.0 / 0.0)
+		return ("-inf");
 	value = (long long)nb;
 	nb -= value;
 	if (precision == 0 && nb > 0.5)

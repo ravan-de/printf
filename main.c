@@ -2,17 +2,17 @@
 #include "libft.h"
 #include <stdio.h>
 
-#define FORMAT "%#.o\n"
+#define FORMAT " %.0f\n"
 
 int main(void)
 {
-    long long   b;
+	double	f;
     int         ret;
     int         myret;
 
-    b = 9223372036854775807;
-    ret = printf(ft_strjoin("real", FORMAT), 0);
-    myret = ft_printf(ft_strjoin("fake", FORMAT), 0);
+    f = 1.0 / 0.0;
+    ret = printf(ft_strjoin("real", FORMAT), f);
+    myret = ft_printf(ft_strjoin("fake", FORMAT), f);
     ft_printf("ret: %d\n", ret);
     ft_printf("myret: %d\n", myret);
     return (0);

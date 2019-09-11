@@ -112,7 +112,7 @@ void	ft_string(char **str, t_flags *flags)
 	flags->prec = 0;
 }
 
-void	ft_apply_mods(char *str, t_flags *flags)
+int	ft_apply_mods(char *str, t_flags *flags)
 {
 	char	*finalstr;
 	char	*extrastr;
@@ -127,7 +127,7 @@ void	ft_apply_mods(char *str, t_flags *flags)
 	else
 	{
 		flags->prec = 0;
-		flags->width -= 1;
+		flags->width  -= 1;
 	}
 	if (flags->width < 0)
 		flags->width = 0;
@@ -136,9 +136,6 @@ void	ft_apply_mods(char *str, t_flags *flags)
 		ft_strcaps(&finalstr);
 	flags->len += ft_strlen(finalstr);
 	ft_putstr(finalstr);
-	if (ft_strlen(str) == 0 && flags->conv == 'c')
-	{
-		ft_putchar('\0');
-		flags->len += 1;
-	}
+	free(finalstr);
+	return (ft_strlen(str));
 }

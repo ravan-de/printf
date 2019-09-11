@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "printf.h"
 #include <stdlib.h>
 
 char	*ft_convbase(uint64_t nb, uint64_t base)
