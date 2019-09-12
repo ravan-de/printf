@@ -98,7 +98,7 @@ void	ft_string(char **str, t_flags *flags)
 
 	i = 0;
 	if (*str == NULL)
-		*str = ft_strcpy(ft_strnew(6), "(null)");
+		*str = ft_strdup("(null)");
 	if (flags->prec == -1)
 		flags->prec = ft_strlen(*str);
 	while ((*str)[i] != '\0')
@@ -112,7 +112,7 @@ void	ft_string(char **str, t_flags *flags)
 	flags->prec = 0;
 }
 
-int	ft_apply_mods(char *str, t_flags *flags)
+int		ft_apply_mods(char *str, t_flags *flags)
 {
 	char	*finalstr;
 	char	*extrastr;
@@ -127,7 +127,7 @@ int	ft_apply_mods(char *str, t_flags *flags)
 	else
 	{
 		flags->prec = 0;
-		flags->width  -= 1;
+		flags->width -= 1;
 	}
 	if (flags->width < 0)
 		flags->width = 0;

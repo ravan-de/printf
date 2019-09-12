@@ -31,14 +31,14 @@ void	ft_init_uns(char *(*conv_u[5]) (va_list arglst, t_get_uns func))
 	conv_u[4] = conv_llu;
 }
 
-void    ft_process_extra(va_list arglst, t_flags *flags, char **str)
+void	ft_process_extra(va_list arglst, t_flags *flags, char **str)
 {
 	if (flags->conv == 'c')
 		*str = ft_memset(ft_strnew(1), (char)va_arg(arglst, int), 1);
 	if (flags->conv == '%')
 		*str = ft_memset(ft_strnew(1), '%', 1);
 	if (flags->conv == 's')
-		*str = va_arg(arglst, char *);
+		*str = ft_strdup(va_arg(arglst, char *));
 	if (flags->conv == 'f' && flags->type != 5)
 		*str = ft_get_double(va_arg(arglst, double), flags->prec);
 	if (flags->conv == 'f' && flags->type == 5)
@@ -59,18 +59,17 @@ void	ft_process_flags(va_list arglst, t_flags *flags)
 		str = (*conv_u[flags->type])(arglst, ft_get_uns);
 	if (flags->conv == 'o')
 		str = (*conv_u[flags->type])(arglst, ft_get_oct);
-	if (flags->conv == 'x' || flafgs->conv == 'X')
+	if (flags->conv == 'x' || flags->conv == 'X')
 		str = (*conv_u[flags->type])(arglst, ft_get_hex);
 	if (flags->conv == 'p')
 		str = (*conv_u[4])(arglst, ft_get_hex);
 	if (flags->conv == 'b')
 		str = (*conv_u[flags->type])(arglst, ft_get_bin);
-    ft_process_extra(arglst, flags, &str);
-	if (apply_mods(str, flags) == 0 && flags->conv == 'c')
+	ft_process_extra(arglst, flags, &str);
+	if (ft_apply_mods(str, flags) == 0 && flags->conv == 'c')
 	{
 		ft_putchar('\0');
 		flags->len += 1;
 	}
 	free(str);
-	
 }

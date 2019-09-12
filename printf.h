@@ -16,8 +16,6 @@
 # include <stdarg.h>
 # include <stdlib.h>
 
-# define uint64_t u_int64_t
-
 typedef struct	s_flags
 {
 	int mods;
@@ -33,7 +31,7 @@ typedef char	*(*t_get_uns) (uint64_t nb);
 
 int				ft_printf(char *str, ...);
 void			ft_process_flags(va_list arglst, t_flags *flags);
-void			ft_apply_mods(char *str, t_flags *flags);
+int				ft_apply_mods(char *str, t_flags *flags);
 char			*conv_int(va_list arglst, t_get_int func);
 char			*conv_h_int(va_list arglst, t_get_int func);
 char			*conv_hh_int(va_list arglst, t_get_int func);
@@ -51,7 +49,7 @@ char			*ft_get_bin(uint64_t nb);
 char			*ft_convbase(uint64_t nb, uint64_t base);
 char			*ft_get_int(long long nb);
 char			*ft_get_double(double nb, int precision);
-char    		*ft_get_ldouble(long double nb, int precision);
+char			*ft_get_ldouble(long double nb, int precision);
 int				ft_getmods(char *str);
 int				ft_get_fieldwidth(char *str, t_flags *flags);
 int				ft_get_precision(char *str, t_flags *flags);

@@ -37,7 +37,7 @@ int		ft_get_fieldwidth(char *str, t_flags *flags)
 		flags->width = ft_atoi(&str[i]);
 	while (str[i] >= '0' && str[i] <= '9')
 		i++;
-    return (i);
+	return (i);
 }
 
 int		ft_getmods(char *str)
@@ -62,7 +62,6 @@ int		ft_typeflags(char *str, t_flags *flags)
 
 	h = 0;
 	l = 0;
-
 	if (*str == 'L')
 	{
 		flags->type = 5;

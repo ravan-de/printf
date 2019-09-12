@@ -32,7 +32,9 @@ int		ft_get_flags(char *str, va_list arglst, t_flags *flags)
 	i += ft_typeflags(&str[i], flags);
 	flags->conv = ft_convflags(&str[i]);
 	if (flags->conv == -1)
-		ft_putstr("flag_error");
+		return (i + 1);
+	if (flags->conv != 'f' && flags->type == 5)
+		flags->type = 0;
 	if (flags->conv == 'f' && flags->prec == -1)
 		flags->prec = 6;
 	ft_process_flags(arglst, flags);
@@ -64,5 +66,3 @@ int		ft_printf(char *str, ...)
 	va_end(arglst);
 	return (flags.len + len);
 }
-
-//L with flags other than f segfaults
