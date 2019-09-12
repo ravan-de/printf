@@ -66,7 +66,7 @@ void	ft_process_flags(va_list arglst, t_flags *flags)
 	if (flags->conv == 'b')
 		str = (*conv_u[flags->type])(arglst, ft_get_bin);
 	ft_process_extra(arglst, flags, &str);
-	if (ft_apply_mods(str, flags) == 0 && flags->conv == 'c')
+	if (ft_apply_mods(&str, flags) == 0 && flags->conv == 'c')
 	{
 		ft_putchar('\0');
 		flags->len += 1;

@@ -18,12 +18,12 @@
 
 typedef struct	s_flags
 {
-	int mods;
-	int width;
-	int prec;
-	int type;
-	int conv;
-	int len;
+	int		mods;
+	int		width;
+	int		prec;
+	int		type;
+	int		conv;
+	int		len;
 }				t_flags;
 
 typedef	char	*(*t_get_int) (long long nb);
@@ -31,7 +31,7 @@ typedef char	*(*t_get_uns) (uint64_t nb);
 
 int				ft_printf(char *str, ...);
 void			ft_process_flags(va_list arglst, t_flags *flags);
-int				ft_apply_mods(char *str, t_flags *flags);
+int				ft_apply_mods(char **str, t_flags *flags);
 char			*conv_int(va_list arglst, t_get_int func);
 char			*conv_h_int(va_list arglst, t_get_int func);
 char			*conv_hh_int(va_list arglst, t_get_int func);

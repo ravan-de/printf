@@ -21,7 +21,7 @@ char	*ft_get_int(long long nb)
 
 	str = ft_strnew(20);
 	i = 0;
-	if (nb == -9223372036854775808)
+	if (nb < -9223372036854775807)
 	{
 		ft_strcpy(str, "-922337203685477580");
 		nb = 8;

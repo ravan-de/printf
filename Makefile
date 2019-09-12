@@ -37,7 +37,7 @@ $(NAME): $(OBJ) $(LIBFTOBJ)
 	ar rc $(NAME) $(OBJ) $(LIBFTOBJ)
 
 %.o: %.c
-	gcc -c -o $@ $^ -I $(INCL)
+	gcc -c -Wall -Wextra -Werror -o $@ $^ -I $(INCL)
 
 %.o: libft/%.c
 	gcc -Wall -Wextra -Werror -c -o $@ $^ -I $(INCL)
