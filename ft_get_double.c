@@ -28,11 +28,12 @@ char	*ft_assemble_float(char **intstr, long long val, int zeros, int prec)
 		return (str);
 	}
 	decstr = ft_get_int(val);
-	str = ft_strnew(ft_strlen(*intstr) + 1 + zeros + ft_strlen(decstr));
+	str = ft_strnew(ft_strlen(*intstr) + 1 + prec);
 	ft_strcpy(str, *intstr);
 	str[ft_strlen(str)] = '.';
 	ft_memset(&str[ft_strlen(str)], '0', zeros);
 	ft_strcat(str, decstr);
+	ft_memset(&str[ft_strlen(str)], '0', prec - zeros - ft_strlen(decstr));
 	free(*intstr);
 	free(decstr);
 	return (str);
@@ -48,7 +49,7 @@ char	*ft_decimals(char **intstr, double nb, int precision)
 	i = 0;
 	if (nb < 0)
 		nb *= -1;
-	while (i < precision)
+	while (i < precision && (long long)nb < 1000000000000000000)
 	{
 		i++;
 		nb *= 10;
@@ -72,7 +73,7 @@ char	*ft_ldecimals(char **intstr, long double nb, int precision)
 	i = 0;
 	if (nb < 0)
 		nb *= -1;
-	while (i < precision)
+	while (i < precision && (long long)nb < 1000000000000000000)
 	{
 		i++;
 		nb *= 10;
@@ -89,6 +90,7 @@ char	*ft_ldecimals(char **intstr, long double nb, int precision)
 char	*ft_get_double(double nb, int precision)
 {
 	char		*str;
+	int			i;
 	long long	value;
 
 	if (nb != nb)
