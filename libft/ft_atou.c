@@ -11,29 +11,23 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-int	ft_atoi(const char *str)
+uint64_t	ft_atou(const char *str)
 {
 	size_t		i;
-	int			tot;
-	int			sign;
+	uint64_t	tot;
 
-	sign = 1;
 	tot = 0;
 	i = 0;
 	while (ft_isspace(str[i]) != 0)
 		i++;
-	if (str[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	else if (str[i] == '+')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (ft_isdigit(str[i]) != 0)
 	{
 		tot = tot * 10 + str[i] - '0';
 		i++;
 	}
-	return (sign * tot);
+	return (tot);
 }

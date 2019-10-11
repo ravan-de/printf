@@ -26,6 +26,12 @@ typedef struct	s_flags
 	int		len;
 }				t_flags;
 
+typedef union	u_float
+{
+	double		f;
+	uint64_t	realf;
+}				t_float;
+
 typedef	char	*(*t_get_int) (long long nb);
 typedef char	*(*t_get_uns) (uint64_t nb);
 

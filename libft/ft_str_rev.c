@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/27 20:28:34 by ravan-de      #+#    #+#                 */
-/*   Updated: 2019/04/01 19:48:23 by ravan-de      ########   odam.nl         */
+/*   Created: 2019/07/30 14:35:14 by ravan-de      #+#    #+#                 */
+/*   Updated: 2019/07/30 14:35:16 by ravan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+void	ft_str_rev(char **str)
 {
-	size_t		i;
-	int			tot;
-	int			sign;
+	char	*revstr;
+	size_t	len;
+	size_t	i;
 
-	sign = 1;
-	tot = 0;
+	len = ft_strlen(*str);
+	revstr = ft_strnew(len);
 	i = 0;
-	while (ft_isspace(str[i]) != 0)
-		i++;
-	if (str[i] == '-')
+	while ((*str)[i] != '\0')
 	{
-		sign = -1;
+		revstr[len - i - 1] = (*str)[i];
 		i++;
 	}
-	else if (str[i] == '+')
-		i++;
-	while (ft_isdigit(str[i]) != 0)
-	{
-		tot = tot * 10 + str[i] - '0';
-		i++;
-	}
-	return (sign * tot);
+	free(*str);
+	*str = revstr;
 }

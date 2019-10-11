@@ -120,7 +120,7 @@ int		ft_apply_mods(char **str, t_flags *flags)
 	extrastr = NULL;
 	if (flags->conv == 'd' || flags->conv == 'i' || flags->conv == 'u'
 	|| flags->conv == 'o' || flags->conv == 'x' || flags->conv == 'X'
-	|| flags->conv == 'p')
+	|| flags->conv == 'p' || flags->conv == 'f')
 		extrastr = ft_numbers(str, flags);
 	else if (flags->conv == 's')
 		ft_string(str, flags);

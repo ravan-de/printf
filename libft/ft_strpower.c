@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/27 20:28:34 by ravan-de      #+#    #+#                 */
-/*   Updated: 2019/04/01 19:48:23 by ravan-de      ########   odam.nl         */
+/*   Created: 2019/07/30 14:35:14 by ravan-de      #+#    #+#                 */
+/*   Updated: 2019/07/30 14:35:16 by ravan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-int	ft_atoi(const char *str)
+char	*ft_strpower(char *nbstr, int power)
 {
-	size_t		i;
-	int			tot;
-	int			sign;
+	char	*retstr;
+	char	*temp;
 
-	sign = 1;
-	tot = 0;
-	i = 0;
-	while (ft_isspace(str[i]) != 0)
-		i++;
-	if (str[i] == '-')
+	if (power == 0)
+		return (ft_memset(ft_strnew(1), '1', 1));
+	if (power == 1)
+		return (ft_strdup(nbstr));
+	retstr = ft_strprod(nbstr, nbstr);
+	power--;
+	while (power > 1)
 	{
-		sign = -1;
-		i++;
+		temp = ft_strdup(retstr);
+		free(retstr);
+		retstr = ft_strprod(temp, nbstr);
+		free(temp);
+		power--;
 	}
-	else if (str[i] == '+')
-		i++;
-	while (ft_isdigit(str[i]) != 0)
-	{
-		tot = tot * 10 + str[i] - '0';
-		i++;
-	}
-	return (sign * tot);
+	return (retstr);
 }

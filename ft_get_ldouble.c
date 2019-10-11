@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "printf.h"
 
-char	*rounding(char **str, double nb, int precision, unsigned k)
+char	*lrounding(char **str, long double nb, int precision, unsigned k)
 {
 	char *retstr;
 
@@ -29,7 +29,7 @@ char	*rounding(char **str, double nb, int precision, unsigned k)
 	return (retstr);
 }
 
-char	*doubletostr(int sign, double nb, unsigned predot, int precision)
+char	*ldoubletostr(int sign, long double nb, unsigned predot, int precision)
 {
 	unsigned	k;
 	char		*str;
@@ -54,10 +54,10 @@ char	*doubletostr(int sign, double nb, unsigned predot, int precision)
 		}
 		k++;
 	}
-	return (rounding(&str, nb, precision, k));
+	return (lrounding(&str, nb, precision, k));
 }
 
-char	*ft_exceptions(double nb)
+char	*ft_lexceptions(long double nb)
 {
 	if (nb != nb)
 		return ("NaN");
@@ -68,7 +68,7 @@ char	*ft_exceptions(double nb)
 	return (NULL);
 }
 
-char	*ft_get_double(double nb, int precision)
+char	*ft_get_ldouble(long double nb, int precision)
 {
 	char		*retstr;
 	unsigned	predot;
@@ -76,7 +76,7 @@ char	*ft_get_double(double nb, int precision)
 
 	sign = 0;
 	predot = 0;
-	retstr = ft_strdup(ft_exceptions(nb));
+	retstr = ft_strdup(ft_lexceptions(nb));
 	if (retstr != NULL)
 		return (retstr);
 	if (nb < 0 || 1.0 / nb == -1.0 / 0.0)
@@ -94,5 +94,5 @@ char	*ft_get_double(double nb, int precision)
 		predot = 1;
 		nb /= 10;
 	}
-	return (doubletostr(sign, nb, predot, precision));
+	return (ldoubletostr(sign, nb, predot, precision));
 }

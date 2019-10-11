@@ -13,7 +13,7 @@
 #ifndef __LIBFT_H
 # define __LIBFT_H
 
-# include <string.h>
+# include <stdlib.h>
 
 typedef struct		s_list
 {
@@ -31,7 +31,9 @@ void				ft_lst_append(t_list *alst, t_list *new);
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 char				*ft_itoa(int n);
+char				*ft_utoa(uint64_t n);
 int					ft_atoi(const char *str);
+uint64_t			ft_atou(const char *str);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 void				ft_memdel(void **ap);
 void				*ft_memalloc(size_t size);
@@ -56,6 +58,7 @@ void				ft_strdel(char **as);
 void				ft_strclr(char *s);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
+void				ft_str_rev(char **str);
 char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int					ft_strequ(char const *s1, char const *s2);
@@ -74,9 +77,12 @@ char				*ft_strchr(const char *str, int c);
 char				*ft_strrchr(const char *str, int c);
 char				*ft_strstr(const char *haystack, const char *needle);
 char				*ft_strnstr(const char *hay, const char *need, size_t len);
+char				*ft_strsum(char *s1, char *s2);
+char				*ft_strprod(char *s1, char *s2);
+char				*ft_strpower(char *nbstr, int power);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-long long			ft_power(long long nb, unsigned power);
+long long unsigned	ft_power(long long unsigned nb, unsigned power);
 int					ft_isupper(int c);
 int					ft_islower(int c);
 int					ft_isalpha(int c);

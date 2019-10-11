@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-OBJ = ft_str_resize.o \
+OBJ = ft_str_resize.o ft_utoa.o ft_atou.o \
 	ft_memrcpy.o ft_lst_append.o ft_lstmap.o ft_lstdelone.o ft_lstdel.o \
 	ft_lstadd.o ft_lstiter.o ft_lstnew.o ft_putendl.o ft_putchar_fd.o \
 	ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_itoa.o ft_strsplit.o\
@@ -24,7 +24,8 @@ OBJ = ft_str_resize.o \
 	ft_strcpy.o ft_strncpy.o ft_strchr.o ft_strcat.o ft_strncat.o ft_strstr.o \
 	ft_strnstr.o ft_strcmp.o ft_strncmp.o ft_isalpha.o ft_isdigit.o \
 	ft_isalnum.o ft_isascii.o ft_isprint.o ft_toupper.o ft_tolower.o \
-	ft_isupper.o ft_islower.o ft_putchar.o ft_power.o ft_strcaps.o
+	ft_isupper.o ft_islower.o ft_putchar.o ft_power.o ft_strcaps.o \
+	ft_strsum.o ft_strprod.o ft_strpower.o
 
 all: $(NAME)
 
