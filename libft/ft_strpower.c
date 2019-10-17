@@ -11,32 +11,26 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "printf.h"
 #include <stdlib.h>
 
-char	*ft_convbase(uint64_t nb, uint64_t base)
+char	*ft_strpower(char *nbstr, int power)
 {
-	char	*str;
-	int		i;
-	int		c;
+	char	*retstr;
+	char	*temp;
 
-	c = 0;
-	i = 0;
-	while (nb / ft_power(base, i) >= base)
-		i++;
-	str = ft_strnew(i + 1);
-	if (nb / ft_power(base, i) > 9)
-		str[c] = nb / ft_power(base, i) + 87;
-	else
-		str[c] = nb / ft_power(base, i) + 48;
-	while (i > 0)
+	if (power == 0)
+		return (ft_memset(ft_strnew(1), '1', 1));
+	if (power == 1)
+		return (ft_strdup(nbstr));
+	retstr = ft_strprod(nbstr, nbstr);
+	power--;
+	while (power > 1)
 	{
-		i--;
-		c++;
-		if (nb / ft_power(base, i) % base > 9)
-			str[c] = nb / ft_power(base, i) % base + 87;
-		else
-			str[c] = nb / ft_power(base, i) % base + 48;
+		temp = ft_strdup(retstr);
+		free(retstr);
+		retstr = ft_strprod(temp, nbstr);
+		free(temp);
+		power--;
 	}
-	return (str);
+	return (retstr);
 }

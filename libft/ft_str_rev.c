@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print_int.c                                        :+:    :+:            */
+/*   ft_printf.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -10,41 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include <stdlib.h>
+#include "libft.h"
 
-void    get_int(va_list arglst, char **printstr)
+void	ft_str_rev(char **str)
 {
-    int nb;
+	char	*revstr;
+	size_t	len;
+	size_t	i;
 
-    nb = va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_h_int(va_list arglst, char **printstr)
-{
-    short nb;
-
-    nb = (short)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_hh_int(va_list arglst, char **printstr)
-{
-    signed char nb;
-
-    nb = (signed char)va_arg(arglst, int);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_l_int(va_list arglst, char **printstr)
-{
-    long nb;
-
-    nb = va_arg(arglst, long);
-    ft_get_int((long long)nb, printstr);
-}
-
-void    get_ll_int(va_list arglst, char **printstr)
-{
-    ft_get_int(va_arg(arglst, long long), printstr);
+	len = ft_strlen(*str);
+	revstr = ft_strnew(len);
+	i = 0;
+	while ((*str)[i] != '\0')
+	{
+		revstr[len - i - 1] = (*str)[i];
+		i++;
+	}
+	free(*str);
+	*str = revstr;
 }

@@ -12,39 +12,33 @@
 
 #include "printf.h"
 
-void    get_unsigned(va_list arglst, char **printstr)
+char	*conv_un(va_list arglst, t_get_uns func)
 {
-    unsigned nb;
-
-    nb = va_arg(arglst, unsigned);
-    ft_get_unsigned((unsigned long long)nb, printstr);
+	return (func(va_arg(arglst, unsigned)));
 }
 
-void    get_h_unsigned(va_list arglst, char **printstr)
+char	*conv_hu(va_list arglst, t_get_uns func)
 {
-    unsigned short nb;
+	unsigned short	nb;
 
-    nb = (unsigned short)va_arg(arglst, int);
-    ft_get_unsigned((unsigned long long)nb, printstr);
+	nb = (unsigned short)va_arg(arglst, unsigned);
+	return (func(nb));
 }
 
-void    get_hh_unsigned(va_list arglst, char **printstr)
+char	*conv_hhu(va_list arglst, t_get_uns func)
 {
-    unsigned char nb;
+	unsigned char	nb;
 
-    nb = (unsigned char)va_arg(arglst, int);
-    ft_get_unsigned((unsigned long long)nb, printstr);
+	nb = (unsigned char)va_arg(arglst, unsigned);
+	return (func(nb));
 }
 
-void    get_l_unsigned(va_list arglst, char **printstr)
+char	*conv_lu(va_list arglst, t_get_uns func)
 {
-    unsigned long nb;
-
-    nb = va_arg(arglst, unsigned long);
-    ft_get_unsigned((unsigned long long)nb, printstr);
+	return (func(va_arg(arglst, unsigned long)));
 }
 
-void    get_ll_unsigned(va_list arglst, char **printstr)
+char	*conv_llu(va_list arglst, t_get_uns func)
 {
-    ft_get_unsigned(va_arg(arglst, unsigned long long), printstr);
+	return (func(va_arg(arglst, unsigned long)));
 }

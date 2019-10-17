@@ -1,40 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   print_int.c                                        :+:    :+:            */
+/*   ft_itoa.c                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ravan-de <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/07/30 14:35:14 by ravan-de      #+#    #+#                 */
-/*   Updated: 2019/07/30 14:35:16 by ravan-de      ########   odam.nl         */
+/*   Created: 2019/03/31 18:16:11 by ravan-de      #+#    #+#                 */
+/*   Updated: 2019/04/10 17:35:59 by ravan-de      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "limits.h"
 #include <stdlib.h>
 
-void	ft_get_int(long long nb, char **printstr)
+void	ft_getnb(uint64_t nb, size_t index, char *str)
 {
-	int i;
+	if (nb > 9)
+	{
+		ft_getnb(nb / 10, index - 1, str);
+		nb = nb % 10;
+	}
+	nb += '0';
+	str[index] = (char)nb;
+}
 
-	i = 0;
-	if (nb == -9223372036854775808)
+int		ft_len(uint64_t n)
+{
+	int count;
+
+	count = 1;
+	while (n > 9)
 	{
-		strcpy(*printstr, "-922337203685477580");
-		nb = 8;
+		n = n / 10;
+		count++;
 	}
-	if (nb < 0)
-	{
-		(*printstr)[0] = '-';
-		nb *= -1;
-	}
-	while (nb / ft_power(10, i) > 9)
-		i++;
-	(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) + '0';
-	while (i > 0)
-	{
-		i--;
-		(*printstr)[ft_strlen(*printstr)] = nb / ft_power(10, i) % 10 + '0';
-	}
+	return (count);
+}
+
+char	*ft_utoa(uint64_t n)
+{
+	size_t	len;
+	char	*str;
+
+	len = ft_len(n);
+	str = ft_strnew(len);
+	if (str == NULL)
+		return (NULL);
+	ft_getnb(n, len - 1, str);
+	return (str);
 }

@@ -11,40 +11,35 @@
 /* ************************************************************************** */
 
 #include "printf.h"
+#include "libft.h"
 
-void    get_hex(va_list arglst, char **printstr)
+char	*conv_int(va_list arglst, t_get_int func)
 {
-    unsigned nb;
-
-    nb = va_arg(arglst, unsigned);
-    ft_convbase((unsigned long long)nb, 16, printstr);
+	return (func(va_arg(arglst, int)));
 }
 
-void    get_h_hex(va_list arglst, char **printstr)
+char	*conv_h_int(va_list arglst, t_get_int func)
 {
-    unsigned short nb;
+	short	nb;
 
-    nb = (unsigned short)va_arg(arglst, int);
-    ft_convbase((unsigned long long)nb, 16, printstr);
+	nb = (short)va_arg(arglst, int);
+	return (func(nb));
 }
 
-void    get_hh_hex(va_list arglst, char **printstr)
+char	*conv_hh_int(va_list arglst, t_get_int func)
 {
-    unsigned char nb;
+	signed char	nb;
 
-    nb = (unsigned char)va_arg(arglst, int);
-    ft_convbase((unsigned long long)nb, 16, printstr);
+	nb = (signed char)va_arg(arglst, int);
+	return (func(nb));
 }
 
-void    get_l_hex(va_list arglst, char **printstr)
+char	*conv_l_int(va_list arglst, t_get_int func)
 {
-    unsigned long nb;
-
-    nb = va_arg(arglst, unsigned long);
-    ft_convbase((unsigned long long)nb, 16, printstr);
+	return (func(va_arg(arglst, long)));
 }
 
-void    get_ll_hex(va_list arglst, char **printstr)
+char	*conv_ll_int(va_list arglst, t_get_int func)
 {
-    ft_convbase(va_arg(arglst, unsigned long long), 16, printstr);
+	return (func(va_arg(arglst, long long)));
 }
