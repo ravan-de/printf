@@ -50,7 +50,7 @@ char	*ldoubletostr(int sign, long double nb, char *predot, int precision)
 		nb -= (uint64_t)nb;
 		k++;
 	}
-	return (rounding(&str, nb, precision, k));
+	return (lrounding(&str, nb, precision, k));
 }
 
 char	*ft_lexceptions(long double nb)
@@ -72,7 +72,7 @@ char	*ft_get_ldouble(long double nb, int precision)
 
 	sign = 0;
 	predot = 0;
-	retstr = ft_strdup(ft_exceptions(nb));
+	retstr = ft_strdup(ft_lexceptions(nb));
 	if (retstr != NULL)
 		return (retstr);
 	if (nb < 0 || 1.0 / nb == -1.0 / 0.0)
@@ -81,5 +81,5 @@ char	*ft_get_ldouble(long double nb, int precision)
 		nb *= -1;
 	}
 	retstr = ft_utoa((uint64_t)nb);
-	return (doubletostr(sign, nb - (uint64_t)nb, retstr, precision));
+	return (ldoubletostr(sign, nb - (uint64_t)nb, retstr, precision));
 }
